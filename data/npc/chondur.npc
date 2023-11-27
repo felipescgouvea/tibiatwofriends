@@ -1,0 +1,159 @@
+# GIMUD - Graphical Interface Multi User Dungeon
+
+Name = "Chondur"
+Outfit = (154,38-113-119-116-3)
+Home = [32361,32550,7]
+Radius = 2
+
+Behaviour = {
+ADDRESS,"hello$",! -> "Be greeted, child. What do you want in an old shaman's hut?"
+ADDRESS,"hi$",!    -> *
+ADDRESS,!          -> Idle
+BUSY,"hello$",!    -> "Please wait a minute, %N.", Queue
+BUSY,"hi$",!       -> *
+BUSY,!             -> NOP
+VANISH,!           -> "Good bye."
+
+"bye"            -> "Good bye, %N!", Idle
+"farewell"       -> *
+"shaman"         -> "I was chosen by the spirits of the ancestors to serve the people as healer and spiritual leader."
+"spirits"         -> "Spirits are all around us and on these isles they are especially strong and numerous."
+"ancestors"         -> "The ancestors still have contact to the world of those alive. If you know how to talk to them, they can be wise guides and powerful friends."
+"isles"         -> "These isles are a place of strong but secret magic. This magic is strong enough to devour the souls of the weak."
+"magic"         -> "Magic here is like a powerful and wild beast. You need all your strength to master it. If you fail, your punishment will be swift and hard. Voodoo gives me the power and wisdom necessary to handle those energies."
+"magic currents"         -> "Hm, well one could call it like this I guess. Magic is strong on these isles. Too strong for many to handle it safely."
+"secrets"         -> "The spirits speak about a great battle on these isles. Cause for the conflict was the strong magic here. ...",
+					 "The peaceful dwellers, that used to live here in a magical paradise created by themselves, were attacked by a dark power from the depths of the ocean. ...",
+					 "The war destroyed both races and changed the flow of magic forever."
+"voodoo"         -> "Together with the spirits of the ancestors, I seek for wisdom. Together we can change the flow of magic to do things that are beyond the limits of ordinary magic. ...",
+					"In conversations with the spirits, I gain insight into secrets that would have been lost otherwise."
+"dark power"         -> "In the shadow of the depth, a strange and enigmatic race evolved. Using magic to the darkest purposes. ...",
+						"What they lacked in understanding magic like the dwellers, they made up for in number and destructive determination."
+"forever"         -> "Yes, the ancestors hint that there has been some disaster in the past that disarranged the magic of the isles and destroyed whole civilisations."
+"disaster"       -> *
+"disarranged"         -> "Hm, well one could call it like this I guess. Magic is strong on these isles. Too strong for many to handle it safely."
+"civilisations"         -> "The spirits tell about two powerful races that once called this area their home. They annihilated themselves in a war."
+"quaras"         -> "This race rose from slavery to a shadow of their former masters. The dark power that once ruled the ocean here was annihilated by some disaster and the quara used to be one of their serving races."
+"mermaid"         -> "The mermaids are a possible offspring of one of the magical creatures that some ancient race once created here. ...",
+					 "They are vain and self-centred. Their magic is powerful and almost impossible to reverse once it is cast on some human. ...",
+					 "The only good thing is they quickly lose interest into their victims if something of slightly more interest comes up. ...",
+					 "If you are ever in trouble with a mermaid, look for a distraction."
+"king"         -> "The king is far away. Our myth are closer to us than any king in faraway Thais could ever be."
+"thais"         -> "The people see the Thaian occupation like a crippling disease that befalls our isles. Some try to live with it, others are looking for a cure."
+"cure"         -> "It's my part to cure the body and the spirit. Only the people can cure the land they inhabit."
+"venore"         -> "The tradesmen of Venore are tainted with greed. They have so little spirituality that their souls must be starving."
+"cult"         -> "The cult is a mockery of true voodoo. They play with powers they don't even rudimentarily understand and some dark and sinister power is working behind the curtains. Some evil puppet master is misusing them for plans unknown to me."
+"goroma"         -> "One of the Forbidden Islands. No sane captain will agree to bring you there."
+"banana"         -> "A banana staff is the sign of a high ape magician."
+"pirates"         -> "You have to understand that there are two groups of people that are called pirates. One consists of evil thieves and murderers for whom the word pirate actually stands for. ...",
+					 "The others are resistance fighters for whom old ideals are hold true and that are the assertors of the native people."
+
+# Goroma_Counter_Spell_Quest				 
+"spellbook",QuestValue(17509)=0,Count(6120)>=1 -> "Ah, thank you very much! I will honour his memory.", Amount=1, Delete(6120), SetQuestValue(17509,1)	
+"counterspell",QuestValue(17509)=0 -> "You should not talk about things you don't know anything about."
+"energy","field",QuestValue(17509)=0 -> *
+"spellbook",QuestValue(17509)=0 -> *
+"energy","field",QuestValue(17509)>0 -> "Ah, the energy barrier set up by the cult is maintained by lousy magic, but is still effective. Without a proper counterspell you won't be able to pass it."
+
+"counterspell",QuestValue(17509)=1 -> "You mean, you are interested in a counterspell to cross the energy barrier on Goroma?", Topic=1
+Topic=1,"yes"                   -> "This is really not advisable. Behind this barrier, strong forces are raging violently. Are you sure that you want to go there?", Topic=2
+Topic=1							-> "It's much safer for you to stay here anyway, trust me."
+Topic=2,"yes"                   -> "I guess I cannot stop you then. Since you told me about my apprentice, it is my turn to help you. I will perform a ritual for you, but I need a few ingredients. ...",
+								   "Bring me one fresh dead chicken, one fresh dead rat and one fresh dead black sheep, in that order. Summoned ones will do as well as natural ones.", SetQuestValue(17509,2)	
+Topic=2							-> "It's much safer for you to stay here anyway, trust me."
+
+"counterspell",QuestValue(17509)=2 -> Type=4330, Amount=1, "Did you bring the fresh dead chicken?", Topic=3
+"chicken",QuestValue(17509)=2 -> *
+Topic=3,"yes",Count(Type)>=Amount -> "Very good! <mumblemumble> 'Your soul shall be protected!' Now, I need a fresh dead rat.", Delete(Type), SetQuestValue(17509,3)
+Topic=3,"yes"                     -> "You don't have any dead chicken with you don't you?"
+Topic=3                           -> "Maybe another time."
+
+"counterspell",QuestValue(17509)=3 -> Type=3994, Amount=1, "Did you bring the fresh dead rat?", Topic=4
+"rat",QuestValue(17509)=3 -> *
+Topic=4,"yes",Count(Type)>=Amount -> "Very good! <chants and dances> 'You shall face black magic without fear!' Now, I need a fresh dead black sheep.", Delete(Type), SetQuestValue(17509,4)
+Topic=4,"yes"                     -> "You don't have any dead rat with you don't you?"
+Topic=4                           -> "Maybe another time."
+
+"counterspell",QuestValue(17509)=4 -> Type=4095, Amount=1, "Did you bring the fresh dead black sheep?", Topic=5
+"sheep",QuestValue(17509)=4 -> *
+Topic=5,"yes",Count(Type)>=Amount -> "Very good! <stomps staff on ground> 'EVIL POWERS SHALL NOT KEEP YOU ANYMORE! SO BE IT!'", Delete(Type), SetQuestValue(17509,5)
+Topic=5,"yes"                     -> "You don't have any dead black sheep with you don't you?"
+Topic=5                           -> "Maybe another time."
+
+"counterspell",QuestValue(17509)>4 -> "Hm. I don't think you need another one of my counterspells to cross the barrier on Goroma."
+
+# Meriana_Quest
+"mission",QuestValue(17524)=0 -> "The evil cult has placed a curse on one of the captains here. I need at least five of their pirate voodoo dolls to lift that curse.", SetQuestValue(17524,1)
+"task",QuestValue(17524)=0 -> *
+
+"mission",QuestValue(17524)>0,QuestValue(17524)<5 -> Type=5810, Amount=1, "Did you bring one of the required pirate voodoo dolls?", Topic=6
+"task",QuestValue(17524)>0,QuestValue(17524)<5 -> *
+"doll",QuestValue(17524)>0,QuestValue(17524)<5 -> *
+
+"mission",QuestValue(17524)=5 -> Type=5810, Amount=1, "Did you bring the last of the required voodoo dolls?", Topic=6
+"task",QuestValue(17524)=5 -> *
+"doll",QuestValue(17524)=5 -> *
+Topic=6,"yes",Count(Type)>=Amount -> "Now I can weaken that curse a bit. Thank you.", Delete(Type), SetQuestValue(17524,QuestValue(17524)+1)
+Topic=6,"yes",Count(Type)>=Amount,QuestValue(17524)=5 -> "Finally I can put an end to that curse. I thank you so much.", Delete(Type), SetQuestValue(17524,QuestValue(17524)+1)
+Topic=6,"yes"                     -> "Sorry, you do not have it."
+Topic=6                           -> "Maybe another time."
+
+# Shaman_Outfit_Quest
+"outfit",QuestValue(17570)=0 -> "The Shaman outfit can wear only the one's with the great spiritual wisdom."
+"addon",QuestValue(17570)=0 -> *
+
+"outfit",QuestValue(17524)=6,QuestValue(17570)=1 -> "The time has come, my child. I sense great spiritual wisdom in you and I shall grant you a sign of your progress if you can fulfil my task."
+"addon",QuestValue(17524)=6,QuestValue(17570)=1 -> *
+
+"outfit",QuestValue(17570)=5 -> "Yours spiritual wisdom is outstanding %N."
+"addon",QuestValue(17570)=5 -> *
+
+"mission",QuestValue(17524)=6,QuestValue(17570)=1 -> "Deep in the Tiquandan jungle a monster lurks which is seldom seen. It is the revenge of the jungle against humankind. ...",
+													"This monster, if slain, carries a rare root called mandrake. If you find it, bring it to me. Also, gather 5 of the voodoo dolls used by the mysterious dworc voodoomasters. ...",
+													"If you manage to fulfil this task, I'll grant you your own staff. Have you understood everything and are you ready for this test?", Topic=7
+"task",QuestValue(17524)=6,QuestValue(17570)=1 -> *
+Topic=7,"yes" -> "Good! Come back once you've found a mandrake and collected 5 dworcish voodoo dolls.", SetQuestValue(17570,2), SetQuestValue(17594,1)
+Topic=7 -> "Maybe another time."
+
+"mission",QuestValue(17570)=2 -> "Have you gathered the mandrake and the 5 voodoo dolls from the dworcs?", Topic=8
+"task",QuestValue(17570)=2 -> *
+"addon",QuestValue(17570)=2 -> *
+"outfit",QuestValue(17570)=2 -> *
+"mandrake",QuestValue(17570)=2 -> *
+"doll",QuestValue(17570)=2 -> *
+Topic=8,"yes",Count(3002)>=5,Count(5014)>=1 -> "I'm proud of you my child, excellent work. This staff shall be yours from now on!", DeleteAmount(3002,5), DeleteAmount(5014,1), SetQuestValue(17570,3), AddOutfitAddon(154,2), AddOutfitAddon(158,2), EffectOpp(13)
+Topic=8,"yes" -> "You don't have the required items with you."
+Topic=8 -> "Maybe another time."
+
+"mission",QuestValue(17570)=3 -> "You have successfully passed the first task. If you can fulfil my second task, I will grant you a mask like the one I wear. Will you listen to the requirements?", Topic=9
+"task",QuestValue(17570)=3 -> *
+"addon",QuestValue(17570)=3 -> *
+"outfit",QuestValue(17570)=3 -> *
+Topic=9,"yes" -> "The dworcs of Tiquanda like to wear certain tribal masks which I'd like to take a look at. Please bring me 5 of these masks. ...", 
+				"Secondly, the high ape magicians of Banuta use banana staffs. I'd love to learn more about theses staffs, so please bring me 5 of them, too. ...",
+				"If you manage to fulfil this task, I'll grant you your own mask. Have you understood everything and are you ready for this test?", Topic=10
+Topic=9 -> "Maybe another time."
+Topic=10,"yes" -> "Good! Come back once you have collected 5 tribal masks and 5 banana staffs.", SetQuestValue(17570,4)
+Topic=10 -> "Maybe another time."
+
+"mission",QuestValue(17570)=4 -> "Have you gathered the 5 tribal masks and the 5 banana staffs?", Topic=11
+"task",QuestValue(17570)=4 -> *
+"addon",QuestValue(17570)=4 -> *
+"outfit",QuestValue(17570)=4 -> *
+"mask",QuestValue(17570)=4 -> *
+"staff",QuestValue(17570)=4 -> *
+Topic=11,"yes",Count(3348)>=5,Count(3403)>=5 -> "Well done, my child! I hereby grant you the right to wear a shamanic mask. Do it proudly.", DeleteAmount(3348,5), DeleteAmount(3403,5), SetQuestValue(17570,5), AddOutfitAddon(154,1), AddOutfitAddon(158,1), EffectOpp(13)
+Topic=11,"yes" -> "You don't have the required items with you."
+Topic=11 -> "Maybe another time."
+
+"mission" -> "Sorry, I don't have any missions for you."
+"task" -> "Sorry, I don't have any missions for you."
+
+# Wooden_Stake_Quest
+"stake",ExpiringQuestValue(17577)>0 -> "Sorry, but I'm still exhausted from the last ritual. Please come back later."
+"stake",QuestValue(17576)=11 -> "Ten prayers for a blessed stake? Don't tell me they made you travel whole Tibia for it! Listen, child, if you bring me a wooden stake, I'll bless it for you. <chuckles>", SetQuestValue(17576,12)
+"stake",QuestValue(17576)=12,ExpiringQuestValue(17577)<0 -> Type=5941, Amount=1, "Would you like to receive a spiritual prayer to bless your stake?", Topic=12
+Topic=12,"yes",Count(Type)>=Amount -> "<mumbles> Sha Kesh Mar!", Delete(Type), Create(5942), SetExpiringQuestValue(17577, 604800000)
+Topic=12,"yes" -> "You don't have a wooden stake."
+Topic=12 -> "Maybe another time."
+}

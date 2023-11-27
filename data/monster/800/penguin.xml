@@ -1,0 +1,30 @@
+<monster name="Penguin" nameDescription="penguin" race="blood" experience="1" speed="51" manacost="300">
+	<health now="33" max="33" />
+	<look type="250" corpse="7334" />
+	<targetchange interval="1000" chance="5" />
+	<targetstrategy nearest="70" weakest="10" mostdamage="10" random="10" />
+	<flags>
+		<flag summonable="1" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="1" />
+		<flag convinceable="1" />
+		<flag pushable="0" />
+		<flag canpushitems="0" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag runonhealth="32" />
+	</flags>
+	<attacks skill="10" attack="3">
+
+	</attacks>
+	<defenses armor="5" defense="5" />
+	<elements>
+		<element energyPercent="-5" />
+	</elements>
+	<loot>
+		<item id="3578" countmax="2" chance="75" /><!-- fish -->
+		<item id="7159" chance="1" /><!-- green perch -->
+		<item id="7158" chance="1" /><!-- rainbow trout -->
+	</loot>
+</monster>

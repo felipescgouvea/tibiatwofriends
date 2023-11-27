@@ -1,0 +1,119 @@
+# GIMUD - Graphical Interface Multi User Dungeon
+# Henricus.npc: Datenbank für den Waffenhändler Henricus
+
+Name = "Henricus"
+Outfit = (132,79-0-96-0-0)
+Home = [32316,32268,8]
+Radius = 3
+
+Behaviour = {
+ADDRESS,"hello$",!   -> "Greetings, fellow believer %N!"
+ADDRESS,"hi$",!      -> *
+ADDRESS,!            -> Idle
+BUSY,"hello$",!      -> "I will have finished soon %N.", Queue
+BUSY,"hi$",!         -> *
+BUSY,!               -> NOP
+VANISH,!             -> "This ungraceful haste is most suspicious!", Idle
+
+"bye"             -> "Always be on guard, %N!", Idle
+"inquisitor" -> "The churches of the gods entrusted me with the enormous and responsible task to lead the inquisition. I leave the field work to inquisitors who I recruit from fitting people that cross my way."
+"name" -> "I'm Henricus, the Lord Inquisitor."
+"time" -> "Don't worry, there is enough time left."
+"job" -> "By edict of the churches I'm the Lord Inquisitor."
+"believer" -> "Belive on the gods and they will show you the path."
+"church" -> "The churches of the gods united to fight heresy and dark magic. They are the shield of the true believers, while the inquisition is the sword that fights all enemies of virtuousness."
+"gods" -> "We owe to the gods of good our creation and continuing existence. If it weren't for them, we would surely fall prey to the minions of the vile and dark gods."
+"crunor" -> "The church of Crunor works closely together with the druid guild. This makes a cooperation sometimes difficult."
+"zathroth" -> "We can see his evil influence almost everywhere. Keep your eyes open or the dark one will lead you on the wrong way and destroy you."
+"carlin" -> "Carlin is a city of sin and heresy. After the reunion of Carlin with the kingdom, the inquisition will have much work to purify the city and its inhabitants."
+"demon" -> "Demons exist in many different shapes and levels of power. In general, they are servants of the dark gods and command great powers of destruction."
+"darashia" -> "Darashia is a godless town full of mislead fools. One day, it will surely share the fate of its sister town Drefia."
+"drefia" -> "Drefia used to be a city of sin and heresy, just like Carlin nowadays. One day, the gods decided to destroy this town and to erase all evil there."
+"venore" -> "Venore is somewhat difficult to handle. The merchants have a close eye on our activities in their city and our authority is limited there. However, we will use all of our influence to prevent a second Carlin."
+"ab'dendriel" -> "Those elves are hardly any more civilised than orcs. They can become a threat to mankind at any time."
+"elves" -> "Those elves are hardly any more civilised than orcs. They can become a threat to mankind at any time."
+"kazordoon" -> "The dwarfs are allied with Thais but follow their own obscure religion. Although dwarfs keep mostly to themselves, we have to observe this alliance closely."
+"dwarf" -> "The dwarfs are allied with Thais but follow their own obscure religion. Although dwarfs keep mostly to themselves, we have to observe this alliance closely."
+"druid" -> "The druids here still follow the old rules. Sadly, the druids of Carlin have left the right path in the last years."
+"sorcerer" -> "Those who wield great power have to resist great temptations. We have the burden to eliminate all those who give in to the temptations."
+"knight" -> "Nowadays, most knights seem to have forgotten the noble cause to which all knights were bound in the past. Only a few have remained pious, serve the gods and follow their teachings."
+"paladin" -> "It's a shame that only a few paladins still use their abilities to further the cause of the gods of good. Too many paladins have become selfish and greedy."
+
+"join",QuestValue(12160)<1 -> "Do you want to join the inquisition?", topic=1
+"mission",QuestValue(12160)<1 -> "Do you want to join the inquisition?", topic=1
+"report",QuestValue(12160)<1 -> "Do you want to join the inquisition?", topic=1
+topic=1,"no" -> "I expected better from you."
+topic=1,"yes" -> "So be it. Now you are a member of the inquisition. You might ask me for a mission to raise in my esteem.",SetQuestValue(12160,1)
+topic=1 -> "Uh? Whatever."
+
+"mission",QuestValue(12160)=1 -> "Let's see if you are worthy. Take an inquisitor's field guide from the box in the back room. ...",
+	"Follow the instructions in the guide to talk to the Thaian guards that protect the walls and gates of the city and test their loyalty. Then report to me about your mission.",SetQuestValue(12160,2),SetQuestValue(12161,1)
+"mission",QuestValue(12160)=2 -> "Your current mission is to investigate the reliability of certain guards. Are you done with that mission?", topic=2
+"yes",QuestValue(12174)=1,QuestValue(12171)=1,QuestValue(12170)=1,QuestValue(12172)=1,QuestValue(12173)=1,topic=2 -> "Indeed, this is exactly what my other sources told me. Of course I knew the outcome of this investigation in advance. This was just a test. ...",
+	"Well, now that you've proven yourself as useful, you can ask me for another mission. Let's see if you can handle some field duty, too.",SetQuestValue(12161,7),SetQuestValue(12160,3)
+"yes",topic=2  -> "You haven't done your mission yet."
+topic=2  -> "I expected better from you."
+
+"mission",QuestValue(12160)=3 -> "Listen, we have information about a heretic coven that hides in a mountain called the Big Old One. The witches reach this cursed place on flying brooms and think they are safe there. ...",
+	"I've arranged a flying carpet that will bring you to their hideout. Travel to Femor Hills and tell the carpet pilot the codeword 'eclipse' ...",
+	"He'll bring you to your destination. At their meeting place, you'll find a cauldron in which they cook some forbidden brew ...",
+	"Use this vial of holy water to destroy the brew. Also steal their grimoire and bring it to me.",SetQuestValue(12160,4),SetQuestValue(12162,1),Create(133)
+"mission",QuestValue(12160)=4 -> "Your current mission is to destroy the brew in the eclipse."
+
+"mission",QuestValue(12160)=5,Count(7874)>=1 -> "I think it's time to truly test your abilities. One of our allies has requested assistance. I think you are just the right person to help him ...",
+	"Storkus is an old and grumpy dwarf who works as a vampire hunter since many, many decades. He's quite successful but even he has his limits. ...",
+	"So occasionally, we send him help. In return he trains and tests our recruits. It's an advantageous agreement for both sides ...",
+	"You'll find him in his cave at the mountain outside of Kazordoon. He'll tell you about your next mission.",SetQuestValue(12160,6),SetQuestValue(12162,3),SetQuestValue(12163,1),DeleteAmount(7874,1)
+"mission",QuestValue(12160)=5 -> "You need bring me the witches' grimoire."
+
+"mission",QuestValue(12160)>=5,QuestValue(12160)<11 -> "Your current mission is to help the vampire hunter Storkus. Are you done with that mission?", topic=3
+"yes",QuestValue(12160)=10,topic=3 -> "Good, you've returned. Your skill in practical matters seems to be useful. If you're ready for a further mission, just ask.",SetQuestValue(12160,11),SetQuestValue(12163,6)
+"yes",topic=3  -> "You haven't done your mission with Storkus yet."
+topic=3  -> "I expected better from you."
+
+"mission",QuestValue(12160)=11 -> "We've got a report about an abandoned and haunted house in Liberty Bay. I want you to examine this house. It's the only ruin in Liberty Bay so you should have no trouble finding it. ...",
+	"There's an evil being somewhere. I assume that it will be easier to find the right spot at night. Use this vial of holy water on that spot to drive out the evil being.",SetQuestValue(12160,12),SetQuestValue(12164,1),Create(133)
+
+"mission",QuestValue(12160)=12 -> "Your current mission is to exorcise an evil being from a house in Liberty Bay. Are you done with that mission?", topic=4
+"mission",QuestValue(12160)=13 -> *
+"yes",QuestValue(12160)=13,topic=4 -> "Well, this was an easy task, but your next mission will be much more challenging.",SetQuestValue(12164,3),SetQuestValue(12160,14)
+"yes",topic=4  -> "You haven't done your mission yet."
+topic=4  -> "I expected better from you."
+
+"mission",QuestValue(12160)=14 -> "You've handled heretics, witches, vampires and ghosts. Now be prepared to face the most evil creatures we are fighting - demons. Your new task is extremely simple, though far from easy. ...",
+	"Go and slay demonic creatures wherever you find them. Bring me 20 of their essences as a proof of your accomplishments.",SetQuestValue(12160,15),SetQuestValue(12165,1)
+
+
+"mission",QuestValue(12160)=15,Count(6499)>=20 -> Type=6499, Amount=20, "You're indeed a dedicated protector of the true believers. Don't stop now. Kill as many of these creatures as you can. ...",
+	"I also have a reward for your great efforts. Talk to me about your demon hunter outfit anytime from now on. Afterwards, let's talk about the next mission that's awaiting you.",Delete(Type),SetQuestValue(12160,16),SetQuestValue(12165,2)
+"mission",QuestValue(12160)=15 -> "Your current mission is to bring 20 demonic essence."
+
+"mission",QuestValue(12160)=16 -> "Here is your demon hunter outfit. You deserve it. Unlock more addons by completing more missions.",SetQuestValue(12160,17),SetQuestValue(12165,3),addOutfit(288),addOutfit(289),EffectOpp(13)
+"outfit",QuestValue(12160)=16 -> *
+
+"mission",QuestValue(12160)=17 -> "We've got information about something very dangerous going on on the isle of Edron. The demons are preparing something there ...",
+	"Something that is a threat to all of us. Our investigators were able to acquire vital information before some of them were slain by a demon named Ungreez. ...",
+	"It'll be your task to take revenge and to kill that demon. You'll find him in the depths of Edron. Good luck.",SetQuestValue(12160,18),SetQuestValue(12166,1)
+"mission",QuestValue(12160)=18 -> "Your current mission is to find and kill the Ungreez!"
+
+"mission",QuestValue(12160)=19 -> "So the beast is finally dead! Thank the gods. At least some things work out in our favour ...",
+	"Our other operatives were not that lucky, though. But you will learn more about that in your next mission.",SetQuestValue(12160,20),SetQuestValue(12166,3),AddOutfitAddon(288,1), AddOutfitAddon(289,1), EffectOpp(13)
+	
+"mission",QuestValue(12160)=20 -> "Destroy the shadow nexus using this vial of holy water and kill all demon lords.",SetQuestValue(12160,21),SetQuestValue(12167,1),Create(133)
+
+"mission",QuestValue(12160)=21 -> "Your current mission is to destroy the shadow nexus in the Demon Forge. Are you done with that mission?", topic=5
+"mission",QuestValue(12160)=22 -> *
+"yes",QuestValue(12160)=22,topic=5 -> "Incredible! You're a true defender of faith! I grant you the title of a High Inquisitor for your noble deeds. From now on you can obtain the blessing of the inquisition which makes the pilgrimage of ashes obsolete ...",
+	"The blessing of the inquisition will bestow upon you all available blessings. Also, here is the final addon for your demon hunter outfit.",SetQuestValue(12167,3),SetQuestValue(12160,23),SetQuestValue(12160,24),SetQuestValue(12167,4),AddOutfitAddon(288,2),AddOutfitAddon(289,2),EffectOpp(13)
+"yes",topic=5  -> "You haven't done your mission yet."
+topic=5  -> "Come back when you have destroyed the shadow nexus."
+
+"mission",QuestValue(12160)=24 -> "Currently we have no missions for you brave fellow."
+
+"bless",QuestValue(12160)=24 -> Price=60000, "Do you want to receive all blessings for %P gold?", Topic=6
+Topic=6,"yes",QuestValue(101)=1,QuestValue(102)=1,QuestValue(103)=1,QuestValue(104)=1,QuestValue(105)=1,! -> "I can sense you already have bought all the blessings."
+Topic=6,"yes",CountMoney>=Price -> "So receive all blessings!",EffectOpp(11),DeleteMoney,SetQuestValue(101,1),SetQuestValue(102,1),SetQuestValue(103,1),SetQuestValue(104,1),SetQuestValue(105,1),Bless(1),Bless(2),Bless(3),Bless(4),Bless(5)
+Topic=6,"yes"				-> "You do not have enough money."
+Topic=6 					-> "Some other time then."
+
+}

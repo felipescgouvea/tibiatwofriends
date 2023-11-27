@@ -1,0 +1,90 @@
+# GIMUD - Graphical Interface Multi User Dungeon
+# bigben.npc: Datenbank für den Zyklopenschmied Ben (Elfenstadt)
+
+Name = "A Sweaty Cyclops"
+Outfit = (22,0-0-0-0-0)
+Home = [32697,31674,3]
+Radius = 2
+
+Behaviour = {
+ADDRESS,"hello$",! -> "Hum Humm! Welcume lil' %N."
+ADDRESS,"hi$",!    -> *
+ADDRESS,!          -> Idle
+BUSY,"hello$",!    -> "%N waits. Me talks.", Queue
+BUSY,"hi$",!       -> *
+BUSY,!             -> NOP
+VANISH,!           -> "Hum Humm."
+
+"bye"            -> "Good bye lil' one.", Idle
+"farewell"       -> *
+"job"            -> "I am smith."
+"name"           -> "I called Bencthyclthrtrprr by me people. Lil' ones me call Big Ben."
+
+"tibia"          -> "One day I'll go and look."
+"ab'dendriel"    -> "Me parents live here before town was. Me not care about lil' ones." 
+"big","old"      -> "Mountain in south. Lil' lil' ones living there."
+"elves"          -> "Me not fight them, they not fight me."
+"humans"         -> "Always asking me for stuff they can't afford." 
+"orcs"           -> "Silly ones. Not talk much. Always screaming and hitting." 
+"minotaurs"      -> "They were friend with me parents. Long before elves here, they often made visit. No longer come here."
+"dwarfs"         -> "Lil' lil' ones are so fun. We often chat."
+"lil","lil"      -> *
+"god"            -> "You shut up. Me not want to hear."
+"smith"          -> "Working steel is my profession." 
+"steel"          -> "Manny kinds of. Like Mesh Kaha Rogh, Za'Kalortith, Uth'Byth, Uth'Morc, Uth'Amon, Uth'Maer, Uth'Doon, and Zatragil"
+
+"Mesh","Kaha","Rogh" -> "Steel that is singing when forged. No one knows where find today."
+"Za'Kalortith"       -> "It's evil. Demon iron is. No good cyclops goes where you can find and need evil flame to melt."
+"Uth'Byth"           -> "Not good to make stuff off. Bad steel it is. But eating magic, so useful is."
+"Uth'Morc"           -> "Lil' ones it thieves' steel call sometimes. It's dark and making not much noise."
+"Uth'Amon"           -> "Brigthsteel is. Much art made with it. Sorcerers to lazy and afraid to enchant much."
+"Uth'Maer"           -> "Heartiron from heart of big old mountain, found very deep. Lil' lil ones fiercely defend. Not wanting to have it used for stuff but holy stuff."
+"Uth'Doon"           -> "It's high steel called. Only lil' lil' ones know how make."
+"Zatragil"           -> "Most ancients use dream silver for different stuff. Now ancients most gone. Most not know about."
+
+"Teshial"        -> "Is one of elven family or such thing. Me not understand lil' ones and their busisness."
+"Deraisim"       -> *
+"Cenath"         -> *
+"Kuridai"        -> *
+
+"cyclops"        -> "Me people not live here much. Most are far away."
+"excalibug"      -> "Me wish I could make weapon like it."
+
+"uth'kean"         -> Type=3381, Amount=1,  "Very noble. Shiny. Me like. But breaks so fast. Me can make from shiny armour. Lil' one want to trade?", Topic=1
+Topic=1,"yes",QuestValue(17500)<2,!     -> "Wait. Me work no cheap is. Do favour for me first, yes?", Topic=2
+Topic=1,"yes",Count(Type)>=Amount -> "Cling clang!", Delete(Type), Type=5887, Amount=1, Create(Type)
+Topic=1,"yes"                             -> "You not have stuff me want for."
+Topic=1                                   -> "Silly lil' one you are."
+
+"uth'lokr"         -> Type=3416, Amount=1,  "Firy steel it is. Need green ones' breath to melt. Or red even better. Me can make from shield. Lil' one want to trade?", Topic=4
+Topic=4,"yes",QuestValue(17500)<2,!     -> "Wait. Me work no cheap is. Do favour for me first, yes?", Topic=2
+Topic=4,"yes",Count(Type)>=Amount -> "Cling clang!", Delete(Type), Type=5889, Amount=1, Create(Type)
+Topic=4,"yes"                             -> "You not have stuff me want for."
+Topic=4                                   -> "Silly lil' one you are."
+
+"za'ralator"         -> Type=3356, Amount=1,  "Hellsteel is. Cursed and evil. Dangerous to work with. Me can make from evil helmet. Lil' one want to trade?", Topic=5
+Topic=5,"yes",QuestValue(17500)<2,!     -> "Wait. Me work no cheap is. Do favour for me first, yes?", Topic=2
+Topic=5,"yes",Count(Type)>=Amount -> "Cling clang!", Delete(Type), Type=5888, Amount=1, Create(Type)
+Topic=5,"yes"                             -> "You not have stuff me want for."
+Topic=5                                   -> "Silly lil' one you are."
+
+"uth'prta"         -> Type=3281, Amount=1,  "Good iron is. Me friends use it much for fight. Me can make from weapon. Lil' one want to trade?", Topic=6
+Topic=6,"yes",QuestValue(17500)<2,!     -> "Wait. Me work no cheap is. Do favour for me first, yes?", Topic=2
+Topic=6,"yes",Count(Type)>=Amount -> "Cling clang!", Delete(Type), Type=5892, Amount=1, Create(Type)
+Topic=6,"yes"                             -> "You not have stuff me want for."
+Topic=6                                   -> "Silly lil' one you are."
+
+"soul","orb",ClientVersion>=790 -> "Uh. Me can make some nasty lil' bolt from soul orbs. Lil' one want to trade all?", Topic=7
+Topic=7,"yes",QuestValue(17500)<2,!     -> "Wait. Me work no cheap is. Do favour for me first, yes?", Topic=2
+Topic=7,"yes",Count(5944)>=1 -> "Cling clang!", Amount=Count(5944)*3, DeleteAmount(5944, Count(5944)), Type=6528, Create(Type)
+Topic=7,"yes"                             -> "You not have stuff me want for."
+Topic=7                                   -> "Silly lil' one you are."
+
+Topic=2,"yes"                 -> "Me need gift for woman. We dance, so me want to give her bast skirt. But she big is. So I need many to make big one. Bring three okay? Me wait.", SetQuestValue(17500,1), SetQuestValue(17595,1)
+
+"bast skirt",QuestValue(17500)=1         -> Type=3560, Amount=3,  "Lil' one bring three bast skirts?", Topic=3
+Topic=3,"yes",Count(Type)>=Amount -> "Good good! Woman happy will be. Now me happy too and help you.", Delete(Type), SetQuestValue(17500,2)
+Topic=3,"yes"                             -> "You not have stuff me want for."
+Topic=3                                   -> "Silly lil' one you are."
+
+}

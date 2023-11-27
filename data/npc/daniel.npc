@@ -1,0 +1,119 @@
+# GIMUD - Graphical Interface Multi User Dungeon
+# daniel.npc: Datenbank für Gouverneur Daniel Steelsoul
+
+Name = "Daniel Steelsoul"
+Outfit = (73,0-0-0-0-0)
+Home = [33191,31795,7]
+Radius = 2
+
+Behaviour = {
+ADDRESS,"hello$",!       -> "Greetings and Banor with you, %N!"
+ADDRESS,"hi$",!          -> *
+ADDRESS,"hail$",!        -> *
+ADDRESS,"salutations$",! -> *
+ADDRESS,!                -> Idle
+BUSY,"hello$",!          -> "Shut up! I am talking already!"
+BUSY,"hi$",!             -> *
+BUSY,"hail$",!           -> *
+BUSY,"salutations$",!    -> *
+BUSY,!                   -> NOP
+VANISH,!                 -> "PRAISE TO BANOR!"
+
+"bye"            -> "PRAISE TO BANOR!", Idle
+"news"           -> "Nothing new from the north."
+"king"           -> "LONG LIVE THE KING!"
+"leader"         -> "King Tibianus III is our wise and just leader."
+"name"           -> "I am Sir Daniel Steelsoul of the Sacred Order of Banor's Blood."
+"job"            -> "I am the governor of this isle, Edron, and grandmaster of the Knights of Banor's Blood."
+"how","are","you"-> "I did not have much sleep lately, but I am fine."
+"sell"           -> "Are you suggesting I am corruptible?", Topic=2
+"army"           -> "The army protects the Thaian realm. The order of the Knights of Banor's Blood supports them with all our skills."
+"guard"          -> *
+"general"        -> "Harkath Bloodblade declined the governorship because he's needed more in Thais."
+"enemies"        -> "Evil challenges the forces of good in any shape. Be it the claws of vicious monsters or the seductive dark secrets of rotten power."
+"enemy"          -> *
+"banors","blood" -> "We believe that the blood of Banor runs through the veins of all humans. Therefore, we are responsible to live up to Banors standards and not to stain his legacy with sinful acts."
+"castle"         -> "The castle was built on elder foundations we found on this isle."
+
+"edron"          -> "This isle is rumoured to have been the home of a powerful ancient race which became extinct before the corpsewars. It was up to King Tibianus III to reclaim it for humanity and to found this colony."
+"colony"         -> "With the Thaian army bound to other duties, our order was entrusted to secure the area. We defeated the evil minotaurs living right here and cleansed the isle of their unholy presence."
+"minotaur"       -> "The minotaurs, though evil, were worthy opponents. After the treason of the man who is now known as Kaine Kinslayer, we lack the manpower to crush their cyclopean allies, too."
+"cyclop"         -> "They live in an underground city, known as cyclopolis in the north of the isle. Constantly forging weapons for the servants of darkness."
+"allies"         -> *
+"kaine"          -> "He was my second in command. After learning about the forbidden ruins, he, the priestess Agaltha, and their followers freed the criminals we brought here as workers and headed to the north."
+"ruins"          -> "An ancient taboo forbids to enter the northern ruins."
+"taboo"          -> "We thought it was only superstition and no one bothered that Kaine and his friends went there to hunt servants of evil that might have hidden there. So we did not notice the dark cult they started."
+"cult"           -> "We know only little about them. Kaine and his fallen knights were joined by criminal scum and remaining forces of darkness that escaped us. They were joined by some ominous dark monks."
+"monk"           -> "We don't know if they came here or already hid in the ruins as we arrived. Maybe they seduced Kaine or Agaltha, maybe they were theirs for years."
+"agaltha"        -> "She was beautiful but seemed cold hearted. She spoke little to me, prefered the company of Kaine."
+"eremo"          -> "Eremo is a very wise man. I visit him sometimes on his little island near Edron. Just ask a fisherman for a passage."
+"fisherman"      -> "Pemaret is a fisherman on Cormaya."
+"cormaya"        -> "It is a peaceful isle next to Edron with a nice village. There, you should visit the wonderful garden."
+"falk"           -> "A promising young fellow."
+"horn","plenty"  -> "I hardly find the time to visit the tavern."
+"mirabell"       -> *
+"willard"        -> "When he was young, Willard served in the royal army."
+"weapon"         -> "Look for Willard, our local blacksmith."
+"armor"          -> *
+"academy"        -> "After the treason of Kaine, we observe these mages closely. If even a knight falls prey to the seduction of the forbidden ruins, no one can tell how easy some of these mystics might betray his people."
+"amanda"         -> "I think this nun might be a bit young for this position, but I won't question the decisions of the church of Banor's Blood."
+"benjamin"       -> "He and his men fought against Ferumbras somewhere in the north of this isle, long before there were even plans of a colony. Only old Ben returned alive from the battle, but his mind was broken."
+"ferumbras"      -> "He searched something in the north of the isle years ago. Probably he needed something from the forbidden ruins. He was chased and fought by the troops of General Benjamin."
+"join"           -> "You may join the order of Banor's blood if you prove your honor."
+"honor"          -> "Only those who live a life of bravery, honor, and piety may join our sacred order."
+"piety"          -> *
+"bravery"        -> *
+"quest"          -> "A life in bravery, honor, and piety should be every man's most important quest."
+"mission"        -> *
+"god"            -> "I worship Banor, the first champion of good!"
+"banor"          -> "His spirit and blood are within us. Honor this fact or be cast into hell."
+"zathroth"       -> "Do not mention the name of the cursed one!", Burning(10,1), EffectOpp(5), EffectMe(8)
+"brog"           -> "The rotten cyclopses whorship the raging giant of hell."
+"monster"        -> "We cleansed the south of any major enemy, but watch out while travelling the north."
+"excalibug"      -> "With this weapon in my hand, I would teach the servants of darkness the true meaning of the word fear."
+"kazordoon"      -> "Now and then a dwarf comes to this isle. Most behave secretive about their reason to come here. As far as I can tell they are looking for some dwarfish artifact which was lost in ancient times."
+"dwarf"          -> *
+"carlin"         -> "I belong to a sacred order and don't bother about mundane politics."
+
+"fuck"           -> "Take this!", Burning(10,1), EffectOpp(5), EffectMe(8)
+"idiot"          -> "Take this!", Burning(10,1), EffectOpp(5), EffectMe(8)
+"asshole"        -> "Take this!", Burning(10,1), EffectOpp(5), EffectMe(8)
+"ass$"           -> "Take this!", Burning(10,1), EffectOpp(5), EffectMe(8)
+"fag$"           -> "Take this!", Burning(10,1), EffectOpp(5), EffectMe(8)
+"stupid"         -> "Take this!", Burning(10,1), EffectOpp(5), EffectMe(8)
+"tyrant"         -> "Take this!", Burning(10,1), EffectOpp(5), EffectMe(8)
+"shit"           -> "Take this!", Burning(10,1), EffectOpp(5), EffectMe(8)
+"lunatic"        -> "Take this!", Burning(10,1), EffectOpp(5), EffectMe(8)
+
+Topic=2,"yes"    -> "Take this!", Burning(10,1), EffectOpp(5), EffectMe(8)
+Topic=2          -> "Then be more careful with your words!"
+
+# Level 6-49
+"task",QuestValue(17632)=0,level>5,level<50 -> "I may have several tasks for you citizen. Edron needs a help in the hunting of: trolls, goblins, rotworms or cyclopes.", Topic=3
+Topic=3,"troll" -> Amount=17633, "The trolls living west of our city have become quite a nuisance lately. Not that they are really dangerous to us, but still, we must show them that there's a line they shouldn't cross. ...",
+					"I want you to kill 100 of them. If you succeed, I'll provide you some pretty coins and experience. Are you willing to take on this task?", Topic=4
+Topic=3,"goblin" -> Amount=17634, "It's not only the trolls invading from the west coast. <sighs> Goblins also have a lair there where they constantly prepare for their next attack. ...",
+					"If you could kill 150 goblins for us, that'd be a good start. Would you be willing to help us in this matter?", Topic=4
+Topic=3,"rotworm" -> Amount=17635, "Maybe you have noticed the numerous rotworms that burrowed under Edron. They're quite a pest. You look strong enough to be able to vanquish a few for us. Do you think you can kill 150 rotworms?", Topic=4
+Topic=3,"cyclop" -> Amount=17636, "We've successfully driven the minotaurs off this island, but the underground city of the cyclopes - Cyclopolis - is still standing. ...",
+					"We're always looking for adventurers who'd help us decimate the number of cyclopes. Will you assist the city of Edron by killing 150 of them?", Topic=4
+
+"task",QuestValue(17633)=100 -> Amount=20*QuestValue(17633)*ExperienceStage(49)*40/100, Price=800, "Very nice, %N. That will push the trolls' forces back a little. Here is your reward!", SetQuestValue(QuestValue(17632),99999), SetQuestValue(17632,0), Experience(Amount), CreateMoney
+"task",QuestValue(17634)=150 -> Amount=25*QuestValue(17634)*ExperienceStage(49)*40/100, Price=1000, "Congratulations, you've fought well against the goblin plague. Thank you! Here is your reward!", SetQuestValue(QuestValue(17632),99999), SetQuestValue(17632,0), Experience(Amount), CreateMoney
+"task",QuestValue(17635)=150 -> Amount=55*QuestValue(17635)*ExperienceStage(49)*40/100, Price=1200, "Well done! Thanks to you the city is a bit safer. Here's your reward!", SetQuestValue(QuestValue(17632),99999), SetQuestValue(17632,0), Experience(Amount), CreateMoney
+"task",QuestValue(17636)=150 -> Amount=150*QuestValue(17636)*ExperienceStage(49)*40/100, Price=4000, "Very good job, %N. You've been a great help. Here's your reward!", SetQuestValue(QuestValue(17632),99999), SetQuestValue(17632,0), Experience(Amount), CreateMoney
+
+# Speaks
+"task",QuestValue(17632)>0 -> "Your current task is in progress. Follow the status of your task in the quest log. If you wish to cancel your in-progress task then don't be afraid and feel free to cancel."
+
+Topic=4,"yes",QuestValue(Amount)=99999 -> "Oh, I am sorry but you have already finished that task."
+Topic=4,"yes" -> "I'm pleased with your eagerness. Good luck!", SetQuestValue(17632,Amount), SetQuestValue(Amount,0), SetQuestValue(17607,1)
+Topic=4 -> "Maybe next time."
+
+"cancel",QuestValue(17632)>0 -> "Are you sure you want to cancel your current task?", Topic=6
+Topic=6,"yes" -> "Alright! Feel free to do other tasks for us.", SetQuestValue(QuestValue(17632),99998), SetQuestValue(17632,0)
+Topic=6 -> "Good! Speak to me again when you are done hunting."
+
+"task" -> "I don't have any tasks for your level."
+
+}

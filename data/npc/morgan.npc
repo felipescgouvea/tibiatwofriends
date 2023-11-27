@@ -1,0 +1,49 @@
+# GIMUD - Graphical Interface Multi User Dungeon
+
+Name = "Morgan"
+Outfit = (134,78-120-122-132-2)
+Home = [32324,32599,7]
+Radius = 2
+
+Behaviour = {
+ADDRESS,"hello$",! -> "Hello there."
+ADDRESS,"hi$",!    -> *
+ADDRESS,!          -> Idle
+BUSY,"hello$",!    -> "Sorry %N, I am already talking. Please wait for your turn.", Queue
+BUSY,"hi$",!       -> *
+BUSY,!             -> NOP
+VANISH,!           -> "Good bye."
+
+"bye"       -> "Good bye.", Idle
+"farewell"  -> *
+
+"mission",QuestValue(17520)=1,QuestValue(17522)=0 -> Type=6113, Amount=1, "Hm, if you are that eager to work I have an idea how you could help me out. A distant relative of mine, the old sage Eremo lives on the isle Cormaya, near Edron. ...",
+													 "He has not heard from me since ages. He might assume that I am dead. Since I don't want him to get into trouble for receiving a letter from a pirate I ask you to deliver it personally. ...",
+													 "Of course it's a long journey but you asked for it. You will have to prove us your worth. Are you up to that?", Topic=1
+Topic=1,"yes" -> "Alright, we will see. Here, take this letter and deliver it safely to old Eremo on Cormaya.", Create(Type), SetQuestValue(17522,1)
+Topic=1                           -> "Maybe another time."
+
+"mission",QuestValue(17522)=1 -> "Please deliver my letter to Eremo as fast as you can."
+"mission",QuestValue(17522)=2 -> "Thank you for delivering my letter to Eremo. I have no more missions for you.", SetQuestValue(17522,3)
+"mission"             -> "Sorry, I don't have any missions for you."
+
+"addon" -> "I can forge the finest weapons for knights and warriors. They may wear them proudly and visible to everyone."
+"outfit" -> *
+
+"weapon" -> "Would you rather be interested in a knight's sword or in a warrior's sword?", Topic=2
+"forge" -> "What would you like me to forge for you? A knight's sword or a warrior's sword?", Topic=2
+Topic=2,"knight",QuestValue(17541)=0 -> "Great! Simply bring me 100 Iron Ore and one Crude Iron and I will happily forge it for you.", SetQuestValue(17541,1)
+Topic=2,"knight",QuestValue(17541)=1,Count(5880)>=100,Count(5892)>=1 -> "Alright! As a matter of fact, I have one in store. Here you go!", DeleteAmount(5880,100), DeleteAmount(5892,1), SetQuestValue(17541,2), AddOutfitAddon(139,1), AddOutfitAddon(131,1), EffectOpp(13)
+Topic=2,"knight",QuestValue(17541)=1 -> "Great! Simply bring me 100 Iron Ore and one Crude Iron and I will happily forge it for you."
+Topic=2,"knight",QuestValue(17541)=2 -> "Sorry since you already have one sword I will not forge more for you."
+
+Topic=2,"warrior",QuestValue(17560)=0 -> "Great! Simply bring me 100 iron ore and one royal steel and I will happily forge it for you.", SetQuestValue(17560,1)
+Topic=2,"warrior",QuestValue(17560)=1,Count(5880)>=100,Count(5887)>=1 -> "Alright! As a matter of fact, I have one in store. Here you go!", DeleteAmount(5880,100), DeleteAmount(5887,1), SetQuestValue(17560,2), AddOutfitAddon(142,2), AddOutfitAddon(134,2), EffectOpp(13)
+Topic=2,"warrior",QuestValue(17560)=1 -> "Great! Simply bring me 100 iron ore and one royal steel and I will happily forge it for you."
+Topic=2,"warrior",QuestValue(17560)=2 -> "Sorry since you already have one sword I will not forge more for you."
+Topic=2 -> "Maybe another time."
+
+"firebird",QuestValue(17567)=4 -> "Ahh. So Duncan sent you, eh? You must have done something really impressive. Okay, take this fine sabre from me, mate.", SetQuestValue(17567,5), AddOutfitAddon(155,1), AddOutfitAddon(151,1), EffectOpp(13)
+"firebird",QuestValue(17567)=5 -> "Shhh! Don't repeat the same like a parrot. That is a codeword!"
+
+}

@@ -1,0 +1,99 @@
+# GIMUD - Graphical Interface Multi User Dungeon
+# zoltan.npc Datenbank fuer den Zauberlehrer Zoltan
+
+Name = "Zoltan"
+Outfit = (130,95-94-95-57-0)
+Home = [33268,31849,4]
+Radius = 3
+
+Behaviour = {
+ADDRESS,"hello$",! -> "Welcome %N, student of the arcane arts."
+ADDRESS,"hi$",!    -> *
+ADDRESS,!          -> Idle
+BUSY,"hello$",!    -> "Wait %N. Your time will come.", Queue
+BUSY,"hi$",!       -> *
+BUSY,!             -> NOP
+VANISH,!           -> "Use your knowledge wisely."
+
+"bye"       -> "Use your knowledge wisely", Idle
+"job"       -> "I am a teacher of the most powerful spells in Tibia."
+"name"      -> "I am known in this world as Zoltan."
+"time"      -> "It's %T."
+"king"      -> "King Tibianus III was the founder of our academy."
+"tibianus"  -> * 
+"army"      -> "They rely too much on their brawn instead of their brain."
+"excalibug" -> "You will need no weapon if you manipulate the essence of magic."
+"thais"     -> "Thais is a place of barbary."
+"tibia"     -> "There is still much left to be explored in this world."
+"carlin"    -> "Carlin's druids waste the influence they have in enviromentalism."
+"edron"     -> "Sciences are thriving on this isle."
+"news"      -> "I have no time for chit chat."
+"rumors"    -> *
+"eremo"     -> "He is an old and wise man that has seen a lot of Tibia. He is also one of the best magicians. Visit him on his little island."
+"visit"     -> "You should visit Eremo on his little island. Just ask Pemaret on Cormaya for passage."
+"tibianus","talon"     -> "We know not much yet. However, we are afraid for the variety of horrible ways of how they could be used."
+
+"yenny","gentle"  -> "Ah, Yenny the Gentle was one of the founders of the druid order called Crunor's Caress, that has been originated in her hometown Carlin."
+"yenny"           -> "Yenny? Which Yenny? That is a common name."
+"crunor","caress",QuestValue(211)=1 -> "A quite undruidic order of druids they were, as far as we know. I have no more enlightening knowledge about them though.",SetQuestValue(211,2)
+"crunor","caress",QuestValue(211)>1 -> *
+"crunor","caress",QuestValue(211)=0 -> "I am quite busy, ask another time!"
+
+
+"spellbook" -> "Don't bother me with that. Ask in the shops for it."
+"spell"     -> "I have some very powerful spells: 'Energy Bomb', 'Mass Healing', 'Poison Storm', 'Paralyze', and 'Ultimate Explosion'."
+
+"energy","bomb",Sorcerer        -> String="Energybomb", Price=2300, "Are you prepared to learn the spell 'Energy Bomb' for %P gold?", Topic=1
+"energy","bomb"                 -> "No, no, no. This dangerous spell is only for sorcerers."
+"mass","healing",Druid          -> String="Mass Healing", Price=2200, "Are you prepared to learn the spell 'Mass Healing' for %P gold?", Topic=1
+"mass","healing"                -> "No, no, no. This elemental spell is only for druids."
+"poison","storm",Druid          -> String="Poison Storm", Price=3400, "Are you prepared to learn the spell 'Poison Storm' for %P gold?", Topic=1
+"poison","storm"                -> "No, no, no. This elemental spell is only for druids."
+"paralyze",Druid                -> String="Paralyze", Price=1900, "Are you prepared to learn the spell 'Paralyze' for %P gold?", Topic=1
+"paralyze"                      -> "No, no, no. This elemental spell is only for druids."
+"ultimate","explosion",Sorcerer -> String="Ultimate Explosion", Price=8000, "Are you prepared to learn the spell 'Ultimate Explosion' for %P gold?", Topic=1
+"ultimate","explosion"          -> "No, no, no. This dangerous spell is only for sorcerers."
+
+Topic=1,"yes",SpellKnown(String)=1        -> "Want to fool me? You already know this spell."
+Topic=1,"yes",Level<SpellLevel(String) -> Amount=SpellLevel(String), "Don't be in high spirits. Advance to level %A, and then come again."
+Topic=1,"yes",CountMoney<Price            -> "Want to learn one of the most powerful spells, and don't even know how much money you have?"
+Topic=1,"yes"                             -> "Congratulations. You now know one of the most powerful spells. Use it wisely.", DeleteMoney, EffectOpp(13), TeachSpell(String)
+Topic=1                                   -> "Lost your heart?"
+
+"ferumbras", QuestValue(17513)>0 -> "I see, you managed to reach Kharos, the harbinger isle, and discovered the gates to Ferumbras' citadel, and now you are here full of questions. Are you ready to listen?", Topic=3
+Topic=3,"yes" -> "So know that destroying the mortal shell of the being called Ferumbras was the best we were able to achieve with our combined efforts in the past. ...",
+				 "He was destroyed not only once but several times. Eventually we were able to figure out the secret of his seeming immortality. ...",
+				 "On one of the most remote islands of the Shattered Isles, he built a citadel with demonic aid right around a powerful magical nexus. ...",
+				 "The only reason for the whole complex was to establish a point of return into our world. Whenever he is slain, his soul retreats to some demonic dimension to regain enough strength to re-enter the world. ...",
+				 "We were not able to destroy his citadel, this unholy construct. To make matters worse, the nexus makes it easy for demons of all kind to pass into our world. ...",
+				 "The best thing we could do was to seal the citadel and to install a device that will alarm us whenever Ferumbras tries to re-enter our world. ...",
+				 "We grant heroes like you the permission to pass our seals and enter Ferumbras' citadel. ...",
+				 "Just ask for the permission if you are ready to go there. Be warned that the citadel is no holiday place though. You will encounter large amounts of demons and traps that scare off most adventurers. ...",
+				 "On the other hand, WHEN Ferumbras re-enters the world we need heroes like you to face him on his very own ground before he can escape. ...",
+				 "His return is not very likely but it can happen each and every day. If you should manage to defeat him, bring a proof of his death here and you will be rewarded."
+Topic=3                           -> "Lost your heart?"
+"ferumbras", QuestValue(17513)=0 -> "A fallen sorcerer, indeed. What a shame."
+
+"permission",QuestValue(17513)=0 -> "I see no reason to discuss this matter with you."
+"permission",QuestValue(17513)=1 -> Price=500, "The attuning to our seals is a costly process and it will grant you access to the citadel ONLY ONCE. Each time you want to enter, you will need a new attuning. Are you willing to pay 500 gold pieces to become attuned to the seal of the citadel?", Topic=2
+Topic=2,"yes",CountMoney>=Price -> "SO BE IT!", DeleteMoney, SetQuestValue(17513,2), EffectOpp(15)
+Topic=2,"yes"                     -> "Don't even know how much money you have?"
+Topic=2                           -> "Lost your heart?"
+
+"permission",QuestValue(17513)=2 -> "You already have the permission to enter the citadel."
+
+"myra",QuestValue(17547)=11,male -> "Bah, I know. I received some sort of 'nomination' from our outpost in Port Hope. ...",
+									"Usually it takes a little more than that for an award though. However, I honour Myra's word. ...",
+									"I hereby grant you the right to wear a special sign of honour, acknowledged by the academy of Edron. Since you are a man, I guess you don't want girlish stuff. There you go.", SetQuestValue(17547,12), AddOutfitAddon(138,2), AddOutfitAddon(133,2), EffectOpp(13)
+									
+"myra",QuestValue(17547)=11,female -> "Bah, I know. I received some sort of 'nomination' from our outpost in Port Hope. ...",
+									"Usually it takes a little more than that for an award though. However, I honour Myra's word.", SetQuestValue(17547,12), AddOutfitAddon(138,2), AddOutfitAddon(133,2), EffectOpp(13)
+									
+"myra" -> "She was sent to Port Hope by the academy of Edron to function as an adviser in magical matters and as a teacher for sorcerers in need of training."
+
+"proof",QuestValue(17548)=0,Count(5903)>=1 -> "... I cannot believe my eyes. You retrieved this hat from Ferumbras' remains? That is incredible. If you give it to me, I will grant you the right to wear this hat as addon. What do you say?", Topic=4
+Topic=4,"yes" -> "I bow to you, %N, and hereby grant you the right to wear Ferumbras' hat as accessory. Congratulations!", DeleteAmount(5903, 1), SetQuestValue(17548,1), AddOutfitAddon(130,2), AddOutfitAddon(141,2), EffectOpp(13)
+Topic=4 -> "Maybe another time."
+"proof",QuestValue(17548)=0 -> "If you should manage to defeat Ferumbras, bring a proof of his death here and you will be rewarded."
+"proof",QuestValue(17548)=1 -> "The Ferumbras death proof will remain for eternity to you."
+}

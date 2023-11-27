@@ -1,0 +1,14 @@
+# GIMUD - Graphical Interface Multi User Dungeon
+# grof.npc: Datenbank für die Stadtwache am Nordtor
+
+Name = "Grof, the guard"
+Outfit = (131,19-19-19-19-0)
+Home = [32373,32184,7]
+Radius = 3
+
+Behaviour = {
+@"guards-thais.ndb"
+
+"trouble",QuestValue(12170)<1,QuestValue(12161)>=1 -> "I think it'll rain soon and I left some laundry out for drying.",topic=4
+"authorities",topic=4  -> "Yes I'm pretty sure they have failed to send the laundry police to take care of it, you fool.",SetQuestValue(12161, QuestValue(12161) + 1),SetQuestValue(12170,1),EffectOpp(13)
+}

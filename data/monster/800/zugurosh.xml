@@ -1,0 +1,83 @@
+<monster name="Zugurosh" nameDescription="Zugurosh" race="fire" experience="10000" speed="97" manacost="0">
+	<health now="90500" max="90500" />
+	<look type="12" head="2" body="35" legs="57" feet="91" corpse="8721" />
+	<targetchange interval="1000" chance="10" />
+	<targetstrategy nearest="70" weakest="10" mostdamage="10" random="10" />
+	<flags>
+		<flag summonable="0" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="0" />
+		<flag convinceable="0" />
+		<flag pushable="0" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="1" />
+		<flag targetdistance="1" />
+		<flag runonhealth="4500" />
+	</flags>
+	<attacks skill="120" attack="110">
+		<attack name="lifedrain" interval="2000" chance="10" target="1" range="4" min="0" max="-500">
+			<attribute key="areaEffect" value="redshimmer" />
+		</attack>
+		<attack name="physical" interval="2000" chance="15" length="7" spread="0" min="0" max="-500">
+			<attribute key="areaEffect" value="mortarea" />
+		</attack>
+		<attack name="physical" interval="2000" chance="15" target="0" radius="4" min="0" max="-100">
+			<attribute key="areaEffect" value="poff" />
+		</attack>
+		<attack name="firecondition" interval="3000" chance="20" target="1" radius="4" min="-10" max="-10" count="70">
+			<attribute key="areaEffect" value="explosion" />
+		</attack>
+		<attack name="manadrain" interval="1000" chance="13" radius="5" target="0" min="-60" max="-200">
+			<attribute key="areaEffect" value="redshimmer" />
+		</attack>
+	</attacks>
+	<defenses armor="45" defense="55">
+		<defense name="healing" interval="2000" chance="50" min="40" max="60">
+			<attribute key="areaEffect" value="greenshimmer" />
+		</defense>
+		<defense name="healing" interval="2000" chance="50" min="400" max="600">
+			<attribute key="areaEffect" value="greenshimmer" />
+		</defense>
+		<defense name="invisible" interval="1000" chance="5" duration="6000">
+			<attribute key="areaEffect" value="blueshimmer" />
+		</defense>
+	</defenses>
+	<elements>
+		<element physicalPercent="50" />
+		<element firePercent="30" />
+		<element energyPercent="20" />
+		<element earthPercent="40" />
+	</elements>
+	<immunities>
+		<immunity paralyze="1" />
+		<immunity invisible="1" />
+	</immunities>
+	<voices interval="2000" chance="7">
+		<voice sentence="You will run out of resources soon enough!" yell="1" />
+		<voice sentence="One little mistake and you're all are mine!" />
+		<voice sentence="I sense your strength fading!" />
+		<voice sentence="I know you will show a weakness!" />
+		<voice sentence="Your fear will make you prone to mistakes!" />
+	</voices>
+	<loot>
+		<item id="6499" chance="1000" />					<!-- demonic essence -->
+		<item id="3031" countmax="194" chance="1000" />	<!-- gold coin -->
+		<item id="3035" countmax="30" chance="210" />		<!-- platinum coin -->
+		<item id="6104" chance="210" />					<!-- jewel case -->
+		<item id="5944" countmax="10" chance="210" />		<!-- soul orb -->
+		<item id="3034" countmax="30" chance="180" />		<!-- talon -->
+		<item id="5911" countmax="10" chance="170" />		<!-- red piece of cloth -->
+		<item id="3017" chance="170" />					<!-- silver brooch -->
+		<item id="5912" countmax="10" chance="150" />		<!-- blue piece of cloth -->
+		<item id="5909" countmax="10" chance="150" />		<!-- white piece of cloth -->
+		<item id="5910" countmax="10" chance="140" />		<!-- green piece of cloth -->
+		<item id="5914" countmax="10" chance="140" />		<!-- yellow piece of cloth -->
+		<item id="5913" countmax="10" chance="120" />		<!-- brown piece of cloth -->
+		<item id="5954" countmax="2" chance="97" />		<!-- demon horn -->
+		<item id="3079" chance="87" />						<!-- boots of haste -->
+		<item id="3057" chance="60" />						<!-- amulet of loss -->
+		<item id="3554" chance="45" />						<!-- steel boots -->
+		<item id="3555" chance="15" />						<!-- golden boots -->
+	</loot>
+</monster>

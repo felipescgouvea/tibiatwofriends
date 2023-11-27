@@ -1,0 +1,28 @@
+vc14/.vs/theforgottenserver/v15/Browse.VC.db
+vc14/.vs/theforgottenserver/v15/ipch/ba8106b03bee8153.ipch
+<<<<<<< HEAD
+*.lastbuildstate
+*.tlog
+*.ipch
+=======
+vc14/.vs/theforgottenserver/v15/Browse.VC.opendb
+*.ipch
+vc14/x64/
+>>>>>>> stored_players
+*.exe
+vc14/theforgottenserver.vcxproj.user
+vc14/.vs/
+*.pdb
+*.dll
+/.vs
+/vc14/Debug
+/vc14/UpgradeLog.htm
+/TibianusOTClientEncrypted
+/vc14/UpgradeLog2.htm
+/Sabrehaven.zip
+/theforgottenserver.7z
+/theforgottenserver.zip
+/SabrehavenOTClient/tibianus.log
+/800OTClient/otclientv8.log
+/800OTClient/exports
+/otclientv8-master

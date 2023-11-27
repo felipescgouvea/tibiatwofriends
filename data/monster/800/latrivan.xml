@@ -1,0 +1,77 @@
+<monster name="Latrivan" nameDescription="Latrivan" race="fire" experience="10000" speed="97" manacost="0">
+	<health now="25000" max="25000" />
+	<look type="12" head="120" body="128" legs="121" feet="111" corpse="8721" />
+	<targetchange interval="1000" chance="5" />
+	<targetstrategy nearest="70" weakest="10" mostdamage="10" random="10" />
+	<flags>
+		<flag summonable="0" />
+		<flag attackable="1" />
+		<flag hostile="1" />
+		<flag illusionable="0" />
+		<flag convinceable="0" />
+		<flag pushable="0" />
+		<flag canpushitems="1" />
+		<flag canpushcreatures="1" />
+		<flag targetdistance="1" />
+		<flag runonhealth="0" />
+	</flags>
+	<attacks skill="1" attack="1">
+		<attack name="fire" interval="2000" chance="10" length="8" spread="3" min="0" max="-850">
+			<attribute key="areaEffect" value="firearea" />
+		</attack>
+		<attack name="fire" interval="1000" chance="10" length="7" spread="0" min="-50" max="-250">
+			<attribute key="areaEffect" value="explosion" />
+		</attack>
+		<attack name="physical" interval="2000" chance="10" radius="1" range="4" min="0" max="-600">
+			<attribute key="shootEffect" value="death" />
+			<attribute key="areaEffect" value="mortarea" />
+		</attack>
+		<attack name="fire" interval="2000" chance="15" range="7" radius="4" target="0" min="-60" max="-200">
+			<attribute key="shootEffect" value="fire" />
+			<attribute key="areaEffect" value="firearea" />
+		</attack>
+	</attacks>
+	<defenses armor="35" defense="45" />
+	<elements>
+		<element energyPercent="1" />
+	</elements>
+	<immunities>
+		<immunity fire="1" />
+		<immunity invisible="1" />
+	</immunities>
+	<voices interval="2000" chance="7">
+		<voice sentence="I might reward you for killing my brother ~ with a swift death!" yell="1" />
+		<voice sentence="Colateral damage is so fun!" />
+		<voice sentence="Golgordan you fool!" />
+		<voice sentence="We are the brothers of fear!" />
+	</voices>
+	<loot>
+		<item id="3031" countmax="273" chance="1000" />	<!-- gold coin -->
+		<item id="3275" chance="300" />					<!-- double axe -->
+		<item id="6299" chance="250" />					<!-- death ring -->
+		<item id="3098" chance="250" />					<!-- ring of healing -->
+		<item id="3027" countmax="13" chance="200" />		<!-- black pearl -->
+		<item id="3032" countmax="10" chance="200" />		<!-- small emerald -->
+		<item id="3284" chance="150" />					<!-- ice rapier -->
+		<item id="3046" chance="150" />					<!-- magic light wand -->
+		<item id="3054" chance="150" />					<!-- silver amulet -->
+		<item id="3029" countmax="10" chance="150" />		<!-- small sapphire -->
+		<item id="3026" countmax="13" chance="150" />		<!-- white pearl -->
+		<item id="3420" chance="100" />					<!-- demon shield -->
+		<item id="6499" chance="100" />					<!-- demonic essence -->
+		<item id="3051" chance="100" />					<!-- energy ring -->
+		<item id="3281" chance="100" />					<!-- giant sword -->
+		<item id="3063" chance="100" />					<!-- gold ring -->
+		<item id="3364" chance="100" />					<!-- golden legs -->
+		<item id="3041" chance="50" />						<!-- blue gem -->
+		<item id="3356" chance="50" />						<!-- devil helmet -->
+		<item id="3320" chance="50" />						<!-- fire axe -->
+		<item id="3038" chance="50" />						<!-- green gem -->
+		<item id="3048" chance="50" />						<!-- might ring -->
+		<item id="3290" chance="50" />						<!-- silver dagger -->
+		<item id="3033" countmax="12" chance="150" />		<!-- small amethyst -->
+		<item id="3066" chance="50" />						<!-- snakebite rod -->
+		<item id="3049" chance="50" />						<!-- stealth ring -->
+		<item id="3081" chance="50" />						<!-- stone skin amulet -->
+	</loot>
+</monster>
