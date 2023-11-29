@@ -325,6 +325,7 @@ function onLogin(player)
 	player:registerEvent("InquisitionBosses")
 	player:registerEvent("SvargrondArenaKill")
 	player:registerEvent("Shop")
+	player:registerEvent("AutoLoot")
 
 	return true
 end

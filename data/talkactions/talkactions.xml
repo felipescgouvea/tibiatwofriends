@@ -60,6 +60,7 @@
 	<talkaction words="!war" separator=" " script="war.lua"/>
 	<talkaction words="!vial" script="vial.lua"/>
 	<talkaction words="469" script="469.lua"/>
+	<talkaction words="!autoloot" separator=" " script="autoloot.lua"/>
 	
 	<!-- test talkactions -->
 	<talkaction words="!z" separator=" " script="magiceffect.lua"/>

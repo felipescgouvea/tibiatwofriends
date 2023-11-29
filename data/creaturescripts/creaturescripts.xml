@@ -18,4 +18,8 @@
 	<event type="kill" name="SvargrondArenaKill" script="arena_kill.lua" />
 	
 	<event type="extendedopcode" name="Shop" script="shop.lua" /> 
+
+	<!-- Svargrond Arena: Killing a boss -->
+	<event type="kill" name="AutoLoot" script="autoloot.lua" />
+	
 </creaturescripts>

@@ -11,3 +11,9 @@ Sabrehaven is a 7.8-7.92 clone project that has been in development for a long t
 
   - Erikas Kontenis for the Sabrehaven Platform
   - Nostalrius and TheForgottenServer Team
+
+  
+# Requisitos Rodar Server
+
+  - Mysql 5.7.44
+  
