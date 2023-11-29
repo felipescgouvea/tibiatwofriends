@@ -13,7 +13,7 @@ blockHeight = false
 dropItems = false
 marketOfferDuration = 7 * 24 * 60 * 60
 premiumToCreateMarketOffer = false
-
+--teste git
 -- Combat settings
 -- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"
 worldType = "pvp"
