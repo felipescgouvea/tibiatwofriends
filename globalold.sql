@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2019 at 01:39 AM
--- Server version: 10.1.35-MariaDB
--- PHP Version: 7.2.9
+-- Tempo de geração: 29/11/2023 às 01:28
+-- Versão do servidor: 10.4.17-MariaDB
+-- Versão do PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,30 +18,38 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sabrehaven`
+-- Banco de dados: `globalold`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accounts`
+-- Estrutura para tabela `accounts`
 --
 
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL,
   `name` int(11) NOT NULL,
   `password` char(40) NOT NULL,
-  `type` int(11) NOT NULL DEFAULT '1',
-  `premdays` int(11) NOT NULL DEFAULT '0',
-  `lastday` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `type` int(11) NOT NULL DEFAULT 1,
+  `premdays` int(11) NOT NULL DEFAULT 0,
+  `lastday` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `email` varchar(255) NOT NULL DEFAULT '',
-  `creation` int(11) NOT NULL DEFAULT '0'
+  `creation` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Despejando dados para a tabela `accounts`
+--
+
+INSERT INTO `accounts` (`id`, `name`, `password`, `type`, `premdays`, `lastday`, `email`, `creation`) VALUES
+(1, 1, '356a192b7913b04c54574d18c28d46e6395428ab', 5, 0, 0, 'asd@gmail.com', 0),
+(2, 2, '1ac3cf657b0c16fc280e910c6bcbaaa39e243656', 1, 0, 0, 'teste@gmail.com', 1701216652);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account_bans`
+-- Estrutura para tabela `account_bans`
 --
 
 CREATE TABLE `account_bans` (
@@ -55,36 +62,8 @@ CREATE TABLE `account_bans` (
 
 -- --------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `market_history` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `player_id` int(11) NOT NULL,
-  `sale` tinyint NOT NULL DEFAULT '0',
-  `itemtype` smallint unsigned NOT NULL,
-  `amount` smallint unsigned NOT NULL,
-  `price` bigint unsigned NOT NULL DEFAULT '0',
-  `expires_at` bigint unsigned NOT NULL,
-  `inserted` bigint unsigned NOT NULL,
-  `state` tinyint unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `player_id` (`player_id`, `sale`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
-CREATE TABLE IF NOT EXISTS `market_offers` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `player_id` int NOT NULL,
-  `sale` tinyint NOT NULL DEFAULT '0',
-  `itemtype` smallint unsigned NOT NULL,
-  `amount` smallint unsigned NOT NULL,
-  `created` bigint unsigned NOT NULL,
-  `anonymous` tinyint NOT NULL DEFAULT '0',
-  `price` bigint unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `sale` (`sale`,`itemtype`),
-  KEY `created` (`created`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
 --
--- Table structure for table `account_ban_history`
+-- Estrutura para tabela `account_ban_history`
 --
 
 CREATE TABLE `account_ban_history` (
@@ -99,21 +78,42 @@ CREATE TABLE `account_ban_history` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account_viplist`
+-- Estrutura para tabela `account_viplist`
 --
 
 CREATE TABLE `account_viplist` (
   `account_id` int(11) NOT NULL COMMENT 'id of account whose viplist entry it is',
   `player_id` int(11) NOT NULL COMMENT 'id of target player of viplist entry',
   `description` varchar(128) NOT NULL DEFAULT '',
-  `icon` tinyint(2) UNSIGNED NOT NULL DEFAULT '0',
-  `notify` tinyint(1) NOT NULL DEFAULT '0'
+  `icon` tinyint(2) UNSIGNED NOT NULL DEFAULT 0,
+  `notify` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `guilds`
+-- Estrutura para tabela `global_storage`
+--
+
+CREATE TABLE `global_storage` (
+  `key` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `value` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Despejando dados para a tabela `global_storage`
+--
+
+INSERT INTO `global_storage` (`key`, `value`) VALUES
+(1, 1),
+(8420, 8460),
+(8421, 24),
+(17657, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `guilds`
 --
 
 CREATE TABLE `guilds` (
@@ -122,11 +122,11 @@ CREATE TABLE `guilds` (
   `ownerid` int(11) NOT NULL,
   `creationdata` int(11) NOT NULL,
   `motd` varchar(255) NOT NULL DEFAULT '',
-  `balance` bigint(20) UNSIGNED NOT NULL DEFAULT '0'
+  `balance` bigint(20) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Triggers `guilds`
+-- Gatilhos `guilds`
 --
 DELIMITER $$
 CREATE TRIGGER `oncreate_guilds` AFTER INSERT ON `guilds` FOR EACH ROW BEGIN
@@ -140,34 +140,34 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `guildwar_kills`
+-- Estrutura para tabela `guildwar_kills`
 --
 
 CREATE TABLE `guildwar_kills` (
   `id` int(11) NOT NULL,
   `killer` varchar(50) NOT NULL,
   `target` varchar(50) NOT NULL,
-  `killerguild` int(11) NOT NULL DEFAULT '0',
-  `targetguild` int(11) NOT NULL DEFAULT '0',
-  `warid` int(11) NOT NULL DEFAULT '0',
+  `killerguild` int(11) NOT NULL DEFAULT 0,
+  `targetguild` int(11) NOT NULL DEFAULT 0,
+  `warid` int(11) NOT NULL DEFAULT 0,
   `time` bigint(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `guild_invites`
+-- Estrutura para tabela `guild_invites`
 --
 
 CREATE TABLE `guild_invites` (
-  `player_id` int(11) NOT NULL DEFAULT '0',
-  `guild_id` int(11) NOT NULL DEFAULT '0'
+  `player_id` int(11) NOT NULL DEFAULT 0,
+  `guild_id` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `guild_membership`
+-- Estrutura para tabela `guild_membership`
 --
 
 CREATE TABLE `guild_membership` (
@@ -180,7 +180,7 @@ CREATE TABLE `guild_membership` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `guild_ranks`
+-- Estrutura para tabela `guild_ranks`
 --
 
 CREATE TABLE `guild_ranks` (
@@ -193,43 +193,43 @@ CREATE TABLE `guild_ranks` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `guild_wars`
+-- Estrutura para tabela `guild_wars`
 --
 
 CREATE TABLE `guild_wars` (
   `id` int(11) NOT NULL,
-  `guild1` int(11) NOT NULL DEFAULT '0',
-  `guild2` int(11) NOT NULL DEFAULT '0',
-  `status` tinyint(2) NOT NULL DEFAULT '0',
-  `frag_limit` int(11) NOT NULL DEFAULT '0',
-  `declaration_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `bounty` bigint(20) UNSIGNED NOT NULL DEFAULT '0'
+  `guild1` int(11) NOT NULL DEFAULT 0,
+  `guild2` int(11) NOT NULL DEFAULT 0,
+  `status` tinyint(2) NOT NULL DEFAULT 0,
+  `frag_limit` int(11) NOT NULL DEFAULT 0,
+  `declaration_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `bounty` bigint(20) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `houses`
+-- Estrutura para tabela `houses`
 --
 
 CREATE TABLE `houses` (
   `id` int(11) NOT NULL,
   `owner` int(11) NOT NULL,
-  `paid` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `warnings` int(11) NOT NULL DEFAULT '0',
+  `paid` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `warnings` int(11) NOT NULL DEFAULT 0,
   `name` varchar(255) NOT NULL,
-  `rent` int(11) NOT NULL DEFAULT '0',
-  `town_id` int(11) NOT NULL DEFAULT '0',
-  `bid` int(11) NOT NULL DEFAULT '0',
-  `bid_end` int(11) NOT NULL DEFAULT '0',
-  `last_bid` int(11) NOT NULL DEFAULT '0',
-  `highest_bidder` int(11) NOT NULL DEFAULT '0',
-  `size` int(11) NOT NULL DEFAULT '0',
-  `beds` int(11) NOT NULL DEFAULT '0'
+  `rent` int(11) NOT NULL DEFAULT 0,
+  `town_id` int(11) NOT NULL DEFAULT 0,
+  `bid` int(11) NOT NULL DEFAULT 0,
+  `bid_end` int(11) NOT NULL DEFAULT 0,
+  `last_bid` int(11) NOT NULL DEFAULT 0,
+  `highest_bidder` int(11) NOT NULL DEFAULT 0,
+  `size` int(11) NOT NULL DEFAULT 0,
+  `beds` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `houses`
+-- Despejando dados para a tabela `houses`
 --
 
 INSERT INTO `houses` (`id`, `owner`, `paid`, `warnings`, `name`, `rent`, `town_id`, `bid`, `bid_end`, `last_bid`, `highest_bidder`, `size`, `beds`) VALUES
@@ -1099,7 +1099,7 @@ INSERT INTO `houses` (`id`, `owner`, `paid`, `warnings`, `name`, `rent`, `town_i
 -- --------------------------------------------------------
 
 --
--- Table structure for table `house_lists`
+-- Estrutura para tabela `house_lists`
 --
 
 CREATE TABLE `house_lists` (
@@ -1111,7 +1111,7 @@ CREATE TABLE `house_lists` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ip_bans`
+-- Estrutura para tabela `ip_bans`
 --
 
 CREATE TABLE `ip_bans` (
@@ -1125,70 +1125,113 @@ CREATE TABLE `ip_bans` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `players`
+-- Estrutura para tabela `market_history`
+--
+
+CREATE TABLE `market_history` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `sale` tinyint(4) NOT NULL DEFAULT 0,
+  `itemtype` smallint(5) UNSIGNED NOT NULL,
+  `amount` smallint(5) UNSIGNED NOT NULL,
+  `price` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `expires_at` bigint(20) UNSIGNED NOT NULL,
+  `inserted` bigint(20) UNSIGNED NOT NULL,
+  `state` tinyint(3) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `market_offers`
+--
+
+CREATE TABLE `market_offers` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `sale` tinyint(4) NOT NULL DEFAULT 0,
+  `itemtype` smallint(5) UNSIGNED NOT NULL,
+  `amount` smallint(5) UNSIGNED NOT NULL,
+  `created` bigint(20) UNSIGNED NOT NULL,
+  `anonymous` tinyint(4) NOT NULL DEFAULT 0,
+  `price` bigint(20) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `players`
 --
 
 CREATE TABLE `players` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `group_id` int(11) NOT NULL DEFAULT '1',
-  `account_id` int(11) NOT NULL DEFAULT '0',
-  `level` int(11) NOT NULL DEFAULT '1',
-  `vocation` int(11) NOT NULL DEFAULT '0',
-  `health` int(11) NOT NULL DEFAULT '150',
-  `healthmax` int(11) NOT NULL DEFAULT '150',
-  `experience` bigint(20) NOT NULL DEFAULT '0',
-  `lookbody` int(11) NOT NULL DEFAULT '0',
-  `lookfeet` int(11) NOT NULL DEFAULT '0',
-  `lookhead` int(11) NOT NULL DEFAULT '0',
-  `looklegs` int(11) NOT NULL DEFAULT '0',
-  `looktype` int(11) NOT NULL DEFAULT '136',
-  `lookaddons` int(11) NOT NULL DEFAULT '0',
-  `maglevel` int(11) NOT NULL DEFAULT '0',
-  `mana` int(11) NOT NULL DEFAULT '0',
-  `manamax` int(11) NOT NULL DEFAULT '0',
-  `manaspent` int(11) UNSIGNED NOT NULL DEFAULT '0',
-  `soul` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `town_id` int(11) NOT NULL DEFAULT '0',
-  `posx` int(11) NOT NULL DEFAULT '0',
-  `posy` int(11) NOT NULL DEFAULT '0',
-  `posz` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL DEFAULT 1,
+  `account_id` int(11) NOT NULL DEFAULT 0,
+  `level` int(11) NOT NULL DEFAULT 1,
+  `vocation` int(11) NOT NULL DEFAULT 0,
+  `health` int(11) NOT NULL DEFAULT 150,
+  `healthmax` int(11) NOT NULL DEFAULT 150,
+  `experience` bigint(20) NOT NULL DEFAULT 0,
+  `lookbody` int(11) NOT NULL DEFAULT 0,
+  `lookfeet` int(11) NOT NULL DEFAULT 0,
+  `lookhead` int(11) NOT NULL DEFAULT 0,
+  `looklegs` int(11) NOT NULL DEFAULT 0,
+  `looktype` int(11) NOT NULL DEFAULT 136,
+  `lookaddons` int(11) NOT NULL DEFAULT 0,
+  `maglevel` int(11) NOT NULL DEFAULT 0,
+  `mana` int(11) NOT NULL DEFAULT 0,
+  `manamax` int(11) NOT NULL DEFAULT 0,
+  `manaspent` int(11) UNSIGNED NOT NULL DEFAULT 0,
+  `soul` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `town_id` int(11) NOT NULL DEFAULT 0,
+  `posx` int(11) NOT NULL DEFAULT 0,
+  `posy` int(11) NOT NULL DEFAULT 0,
+  `posz` int(11) NOT NULL DEFAULT 0,
   `conditions` blob NOT NULL,
-  `cap` int(11) NOT NULL DEFAULT '0',
-  `sex` int(11) NOT NULL DEFAULT '0',
-  `lastlogin` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `lastip` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `save` tinyint(1) NOT NULL DEFAULT '1',
-  `skull` tinyint(1) NOT NULL DEFAULT '0',
-  `skulltime` int(11) NOT NULL DEFAULT '0',
-  `lastlogout` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `blessings` tinyint(2) NOT NULL DEFAULT '0',
-  `onlinetime` int(11) NOT NULL DEFAULT '0',
-  `deletion` bigint(15) NOT NULL DEFAULT '0',
-  `balance` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `offlinetraining_time` smallint(5) unsigned NOT NULL DEFAULT '43200',
-  `offlinetraining_skill` int(11) NOT NULL DEFAULT '-1',
-  `stamina` smallint(5) NOT NULL DEFAULT '3360',
-  `skill_fist` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_fist_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_club` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_club_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_sword` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_sword_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_axe` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_axe_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_dist` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_dist_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_shielding` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_shielding_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `skill_fishing` int(10) UNSIGNED NOT NULL DEFAULT '10',
-  `skill_fishing_tries` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `deleted` tinyint(1) NOT NULL DEFAULT '0',
-  `fake_player` tinyint(1) NOT NULL DEFAULT '0'
+  `cap` int(11) NOT NULL DEFAULT 0,
+  `sex` int(11) NOT NULL DEFAULT 0,
+  `lastlogin` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `lastip` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `save` tinyint(1) NOT NULL DEFAULT 1,
+  `skull` tinyint(1) NOT NULL DEFAULT 0,
+  `skulltime` int(11) NOT NULL DEFAULT 0,
+  `lastlogout` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `blessings` tinyint(2) NOT NULL DEFAULT 0,
+  `onlinetime` int(11) NOT NULL DEFAULT 0,
+  `deletion` bigint(15) NOT NULL DEFAULT 0,
+  `balance` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `offlinetraining_time` smallint(5) UNSIGNED NOT NULL DEFAULT 43200,
+  `offlinetraining_skill` int(11) NOT NULL DEFAULT -1,
+  `stamina` smallint(5) NOT NULL DEFAULT 3360,
+  `skill_fist` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `skill_fist_tries` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `skill_club` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `skill_club_tries` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `skill_sword` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `skill_sword_tries` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `skill_axe` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `skill_axe_tries` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `skill_dist` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `skill_dist_tries` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `skill_shielding` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `skill_shielding_tries` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `skill_fishing` int(10) UNSIGNED NOT NULL DEFAULT 10,
+  `skill_fishing_tries` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `deleted` tinyint(1) NOT NULL DEFAULT 0,
+  `fake_player` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Triggers `players`
+-- Despejando dados para a tabela `players`
+--
+
+INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `manaspent`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `save`, `skull`, `skulltime`, `lastlogout`, `blessings`, `onlinetime`, `deletion`, `balance`, `offlinetraining_time`, `offlinetraining_skill`, `stamina`, `skill_fist`, `skill_fist_tries`, `skill_club`, `skill_club_tries`, `skill_sword`, `skill_sword_tries`, `skill_axe`, `skill_axe_tries`, `skill_dist`, `skill_dist_tries`, `skill_shielding`, `skill_shielding_tries`, `skill_fishing`, `skill_fishing_tries`, `deleted`, `fake_player`) VALUES
+(1, 'ADM', 3, 1, 1, 0, 150, 150, 0, 0, 0, 0, 0, 136, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '', 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 3360, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, 0),
+(4, 'Digo', 1, 2, 8, 1, 185, 185, 4200, 68, 76, 78, 58, 128, 0, 0, 90, 90, 0, 100, 8, 5, 5, 2, '', 470, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 3360, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, 0);
+
+--
+-- Gatilhos `players`
 --
 DELIMITER $$
 CREATE TRIGGER `ondelete_players` BEFORE DELETE ON `players` FOR EACH ROW BEGIN
@@ -1200,65 +1243,72 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `players_online`
+-- Estrutura para tabela `players_online`
 --
 
 CREATE TABLE `players_online` (
   `player_id` int(11) NOT NULL
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
 
+--
+-- Despejando dados para a tabela `players_online`
+--
+
+INSERT INTO `players_online` (`player_id`) VALUES
+(4);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `player_deaths`
+-- Estrutura para tabela `player_deaths`
 --
 
 CREATE TABLE `player_deaths` (
   `player_id` int(11) NOT NULL,
-  `time` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `level` int(11) NOT NULL DEFAULT '1',
+  `time` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `level` int(11) NOT NULL DEFAULT 1,
   `killed_by` varchar(255) NOT NULL,
-  `is_player` tinyint(1) NOT NULL DEFAULT '1',
+  `is_player` tinyint(1) NOT NULL DEFAULT 1,
   `mostdamage_by` varchar(100) NOT NULL,
-  `mostdamage_is_player` tinyint(1) NOT NULL DEFAULT '0',
-  `unjustified` tinyint(1) NOT NULL DEFAULT '0',
-  `mostdamage_unjustified` tinyint(1) NOT NULL DEFAULT '0'
+  `mostdamage_is_player` tinyint(1) NOT NULL DEFAULT 0,
+  `unjustified` tinyint(1) NOT NULL DEFAULT 0,
+  `mostdamage_unjustified` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `player_depotitems`
+-- Estrutura para tabela `player_depotitems`
 --
 
 CREATE TABLE `player_depotitems` (
   `player_id` int(11) NOT NULL,
   `sid` int(11) NOT NULL COMMENT 'any given range eg 0-100 will be reserved for depot lockers and all > 100 will be then normal items inside depots',
-  `pid` int(11) NOT NULL DEFAULT '0',
+  `pid` int(11) NOT NULL DEFAULT 0,
   `itemtype` smallint(6) NOT NULL,
-  `count` smallint(5) NOT NULL DEFAULT '0',
+  `count` smallint(5) NOT NULL DEFAULT 0,
   `attributes` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `player_items`
+-- Estrutura para tabela `player_items`
 --
 
 CREATE TABLE `player_items` (
-  `player_id` int(11) NOT NULL DEFAULT '0',
-  `pid` int(11) NOT NULL DEFAULT '0',
-  `sid` int(11) NOT NULL DEFAULT '0',
-  `itemtype` smallint(6) NOT NULL DEFAULT '0',
-  `count` smallint(5) NOT NULL DEFAULT '0',
+  `player_id` int(11) NOT NULL DEFAULT 0,
+  `pid` int(11) NOT NULL DEFAULT 0,
+  `sid` int(11) NOT NULL DEFAULT 0,
+  `itemtype` smallint(6) NOT NULL DEFAULT 0,
+  `count` smallint(5) NOT NULL DEFAULT 0,
   `attributes` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `player_murders`
+-- Estrutura para tabela `player_murders`
 --
 
 CREATE TABLE `player_murders` (
@@ -1270,7 +1320,7 @@ CREATE TABLE `player_murders` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `player_namelocks`
+-- Estrutura para tabela `player_namelocks`
 --
 
 CREATE TABLE `player_namelocks` (
@@ -1283,7 +1333,7 @@ CREATE TABLE `player_namelocks` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `player_spells`
+-- Estrutura para tabela `player_spells`
 --
 
 CREATE TABLE `player_spells` (
@@ -1294,19 +1344,19 @@ CREATE TABLE `player_spells` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `player_storage`
+-- Estrutura para tabela `player_storage`
 --
 
 CREATE TABLE `player_storage` (
-  `player_id` int(11) NOT NULL DEFAULT '0',
-  `key` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `value` int(11) NOT NULL DEFAULT '0'
+  `player_id` int(11) NOT NULL DEFAULT 0,
+  `key` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `value` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `server_config`
+-- Estrutura para tabela `server_config`
 --
 
 CREATE TABLE `server_config` (
@@ -1315,7 +1365,7 @@ CREATE TABLE `server_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `server_config`
+-- Despejando dados para a tabela `server_config`
 --
 
 INSERT INTO `server_config` (`config`, `value`) VALUES
@@ -1326,26 +1376,7 @@ INSERT INTO `server_config` (`config`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `global_storage`
---
-
-CREATE TABLE IF NOT EXISTS `global_storage` (
-  `key` int(10) unsigned NOT NULL DEFAULT '0',
-  `value` int(11) DEFAULT NULL,
-  PRIMARY KEY (`key`)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8;
-
---
--- Dumping data for table `global_storage`
---
-
-INSERT INTO `global_storage` (`key`, `value`) VALUES
-(1, 0); -- key 1 = blooming griffinclaw; value 0 = not started in this month, value 1 = already started once
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tile_store`
+-- Estrutura para tabela `tile_store`
 --
 
 CREATE TABLE `tile_store` (
@@ -1353,26 +1384,448 @@ CREATE TABLE `tile_store` (
   `data` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Indexes for dumped tables
+-- Estrutura para tabela `znote`
+--
+
+CREATE TABLE `znote` (
+  `id` int(11) NOT NULL,
+  `version` varchar(30) NOT NULL COMMENT 'Znote AAC version',
+  `installed` int(11) NOT NULL,
+  `cached` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Despejando dados para a tabela `znote`
+--
+
+INSERT INTO `znote` (`id`, `version`, `installed`, `cached`) VALUES
+(1, '1.6', 1701140400, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_accounts`
+--
+
+CREATE TABLE `znote_accounts` (
+  `id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `ip` bigint(20) UNSIGNED NOT NULL,
+  `created` int(11) NOT NULL,
+  `points` int(11) DEFAULT 0,
+  `cooldown` int(11) DEFAULT 0,
+  `active` tinyint(4) NOT NULL DEFAULT 0,
+  `active_email` tinyint(4) NOT NULL DEFAULT 0,
+  `activekey` int(11) NOT NULL DEFAULT 0,
+  `flag` varchar(20) NOT NULL,
+  `secret` char(16) DEFAULT NULL,
+  `twitchuser` varchar(256) DEFAULT NULL,
+  `affiliatecode` varchar(256) DEFAULT NULL,
+  `affiliated` varchar(256) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Despejando dados para a tabela `znote_accounts`
+--
+
+INSERT INTO `znote_accounts` (`id`, `account_id`, `ip`, `created`, `points`, `cooldown`, `active`, `active_email`, `activekey`, `flag`, `secret`, `twitchuser`, `affiliatecode`, `affiliated`) VALUES
+(1, 2, 0, 1701216652, 0, 0, 1, 0, 121903342, 'br', NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_affiliate_logs`
+--
+
+CREATE TABLE `znote_affiliate_logs` (
+  `id` int(11) NOT NULL,
+  `affiliator_account_id` int(11) NOT NULL,
+  `affiliated_account_id` int(11) NOT NULL,
+  `points_given` int(10) NOT NULL,
+  `paid_money` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_auction_player`
+--
+
+CREATE TABLE `znote_auction_player` (
+  `id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `original_account_id` int(11) NOT NULL,
+  `bidder_account_id` int(11) NOT NULL,
+  `time_begin` int(11) NOT NULL,
+  `time_end` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `bid` int(11) NOT NULL,
+  `deposit` int(11) NOT NULL,
+  `sold` tinyint(4) NOT NULL,
+  `claimed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_changelog`
+--
+
+CREATE TABLE `znote_changelog` (
+  `id` int(11) NOT NULL,
+  `text` varchar(255) NOT NULL,
+  `time` int(11) NOT NULL,
+  `report_id` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_deleted_characters`
+--
+
+CREATE TABLE `znote_deleted_characters` (
+  `id` int(11) NOT NULL,
+  `original_account_id` int(11) NOT NULL,
+  `character_name` varchar(255) NOT NULL,
+  `time` datetime NOT NULL,
+  `done` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_forum`
+--
+
+CREATE TABLE `znote_forum` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `access` tinyint(4) NOT NULL,
+  `closed` tinyint(4) NOT NULL,
+  `hidden` tinyint(4) NOT NULL,
+  `guild_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Despejando dados para a tabela `znote_forum`
+--
+
+INSERT INTO `znote_forum` (`id`, `name`, `access`, `closed`, `hidden`, `guild_id`) VALUES
+(1, 'Staff Board', 4, 0, 0, 0),
+(2, 'Tutors Board', 2, 0, 0, 0),
+(3, 'Discussion', 1, 0, 0, 0),
+(4, 'Feedback', 1, 0, 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_forum_posts`
+--
+
+CREATE TABLE `znote_forum_posts` (
+  `id` int(11) NOT NULL,
+  `thread_id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `player_name` varchar(50) NOT NULL,
+  `text` text NOT NULL,
+  `created` int(11) NOT NULL,
+  `updated` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_forum_threads`
+--
+
+CREATE TABLE `znote_forum_threads` (
+  `id` int(11) NOT NULL,
+  `forum_id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `player_name` varchar(50) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `text` text NOT NULL,
+  `created` int(11) NOT NULL,
+  `updated` int(11) NOT NULL,
+  `sticky` tinyint(4) NOT NULL,
+  `hidden` tinyint(4) NOT NULL,
+  `closed` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_global_storage`
+--
+
+CREATE TABLE `znote_global_storage` (
+  `key` varchar(32) NOT NULL,
+  `value` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Despejando dados para a tabela `znote_global_storage`
+--
+
+INSERT INTO `znote_global_storage` (`key`, `value`) VALUES
+('23856', '28');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_guild_wars`
+--
+
+CREATE TABLE `znote_guild_wars` (
+  `id` int(11) NOT NULL,
+  `limit` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_images`
+--
+
+CREATE TABLE `znote_images` (
+  `id` int(11) NOT NULL,
+  `title` varchar(30) NOT NULL,
+  `desc` text NOT NULL,
+  `date` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `image` varchar(50) NOT NULL,
+  `delhash` varchar(30) NOT NULL,
+  `account_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_news`
+--
+
+CREATE TABLE `znote_news` (
+  `id` int(11) NOT NULL,
+  `title` varchar(30) NOT NULL,
+  `text` text NOT NULL,
+  `date` int(11) NOT NULL,
+  `pid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_paygol`
+--
+
+CREATE TABLE `znote_paygol` (
+  `id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `points` int(11) NOT NULL,
+  `message_id` varchar(255) NOT NULL,
+  `service_id` varchar(255) NOT NULL,
+  `shortcode` varchar(255) NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `sender` varchar(255) NOT NULL,
+  `operator` varchar(255) NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `currency` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_paypal`
+--
+
+CREATE TABLE `znote_paypal` (
+  `id` int(11) NOT NULL,
+  `txn_id` varchar(30) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `accid` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `points` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_players`
+--
+
+CREATE TABLE `znote_players` (
+  `id` bigint(20) NOT NULL,
+  `player_id` bigint(20) NOT NULL,
+  `created` bigint(20) NOT NULL,
+  `hide_char` bigint(20) NOT NULL,
+  `comment` varchar(255) NOT NULL,
+  `exphist_lastexp` bigint(255) NOT NULL DEFAULT 0,
+  `exphist1` bigint(255) NOT NULL DEFAULT 0,
+  `exphist2` bigint(255) NOT NULL DEFAULT 0,
+  `exphist3` bigint(255) NOT NULL DEFAULT 0,
+  `exphist4` bigint(255) NOT NULL DEFAULT 0,
+  `exphist5` bigint(255) NOT NULL DEFAULT 0,
+  `exphist6` bigint(255) NOT NULL DEFAULT 0,
+  `exphist7` bigint(255) NOT NULL DEFAULT 0,
+  `onlinetimetoday` bigint(20) NOT NULL DEFAULT 0,
+  `onlinetime1` bigint(20) NOT NULL DEFAULT 0,
+  `onlinetime2` bigint(20) NOT NULL DEFAULT 0,
+  `onlinetime3` bigint(20) NOT NULL DEFAULT 0,
+  `onlinetime4` bigint(20) NOT NULL DEFAULT 0,
+  `onlinetime5` bigint(20) NOT NULL DEFAULT 0,
+  `onlinetime6` bigint(20) NOT NULL DEFAULT 0,
+  `onlinetime7` bigint(20) NOT NULL DEFAULT 0,
+  `onlinetimeall` bigint(20) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_player_reports`
+--
+
+CREATE TABLE `znote_player_reports` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `posx` int(11) NOT NULL,
+  `posy` int(11) NOT NULL,
+  `posz` int(11) NOT NULL,
+  `report_description` varchar(255) NOT NULL,
+  `date` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_shop`
+--
+
+CREATE TABLE `znote_shop` (
+  `id` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `itemid` int(11) DEFAULT NULL,
+  `count` int(11) NOT NULL DEFAULT 1,
+  `description` varchar(255) NOT NULL,
+  `points` int(11) NOT NULL DEFAULT 10
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_shop_logs`
+--
+
+CREATE TABLE `znote_shop_logs` (
+  `id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `itemid` int(11) NOT NULL,
+  `count` int(11) NOT NULL,
+  `points` int(11) NOT NULL,
+  `time` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_shop_orders`
+--
+
+CREATE TABLE `znote_shop_orders` (
+  `id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `itemid` int(11) NOT NULL,
+  `count` int(11) NOT NULL,
+  `time` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_tickets`
+--
+
+CREATE TABLE `znote_tickets` (
+  `id` int(11) NOT NULL,
+  `owner` int(11) NOT NULL,
+  `username` varchar(32) CHARACTER SET latin1 NOT NULL,
+  `subject` text CHARACTER SET latin1 NOT NULL,
+  `message` text CHARACTER SET latin1 NOT NULL,
+  `ip` bigint(20) NOT NULL,
+  `creation` int(11) NOT NULL,
+  `status` varchar(20) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_tickets_replies`
+--
+
+CREATE TABLE `znote_tickets_replies` (
+  `id` int(11) NOT NULL,
+  `tid` int(11) NOT NULL,
+  `username` varchar(32) CHARACTER SET latin1 NOT NULL,
+  `message` text CHARACTER SET latin1 NOT NULL,
+  `created` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_visitors`
+--
+
+CREATE TABLE `znote_visitors` (
+  `id` int(11) NOT NULL,
+  `ip` bigint(20) NOT NULL,
+  `value` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `znote_visitors_details`
+--
+
+CREATE TABLE `znote_visitors_details` (
+  `id` int(11) NOT NULL,
+  `ip` bigint(20) NOT NULL,
+  `time` int(11) NOT NULL,
+  `type` tinyint(4) NOT NULL,
+  `account_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `accounts`
+-- Índices de tabela `accounts`
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Indexes for table `account_bans`
+-- Índices de tabela `account_bans`
 --
 ALTER TABLE `account_bans`
   ADD PRIMARY KEY (`account_id`),
   ADD KEY `banned_by` (`banned_by`);
 
 --
--- Indexes for table `account_ban_history`
+-- Índices de tabela `account_ban_history`
 --
 ALTER TABLE `account_ban_history`
   ADD PRIMARY KEY (`id`),
@@ -1380,14 +1833,20 @@ ALTER TABLE `account_ban_history`
   ADD KEY `banned_by` (`banned_by`);
 
 --
--- Indexes for table `account_viplist`
+-- Índices de tabela `account_viplist`
 --
 ALTER TABLE `account_viplist`
   ADD UNIQUE KEY `account_player_index` (`account_id`,`player_id`),
   ADD KEY `player_id` (`player_id`);
 
 --
--- Indexes for table `guilds`
+-- Índices de tabela `global_storage`
+--
+ALTER TABLE `global_storage`
+  ADD PRIMARY KEY (`key`);
+
+--
+-- Índices de tabela `guilds`
 --
 ALTER TABLE `guilds`
   ADD PRIMARY KEY (`id`),
@@ -1395,21 +1854,21 @@ ALTER TABLE `guilds`
   ADD UNIQUE KEY `ownerid` (`ownerid`);
 
 --
--- Indexes for table `guildwar_kills`
+-- Índices de tabela `guildwar_kills`
 --
 ALTER TABLE `guildwar_kills`
   ADD PRIMARY KEY (`id`),
   ADD KEY `warid` (`warid`);
 
 --
--- Indexes for table `guild_invites`
+-- Índices de tabela `guild_invites`
 --
 ALTER TABLE `guild_invites`
   ADD PRIMARY KEY (`player_id`,`guild_id`),
   ADD KEY `guild_id` (`guild_id`);
 
 --
--- Indexes for table `guild_membership`
+-- Índices de tabela `guild_membership`
 --
 ALTER TABLE `guild_membership`
   ADD PRIMARY KEY (`player_id`),
@@ -1417,14 +1876,14 @@ ALTER TABLE `guild_membership`
   ADD KEY `rank_id` (`rank_id`);
 
 --
--- Indexes for table `guild_ranks`
+-- Índices de tabela `guild_ranks`
 --
 ALTER TABLE `guild_ranks`
   ADD PRIMARY KEY (`id`),
   ADD KEY `guild_id` (`guild_id`);
 
 --
--- Indexes for table `guild_wars`
+-- Índices de tabela `guild_wars`
 --
 ALTER TABLE `guild_wars`
   ADD PRIMARY KEY (`id`),
@@ -1432,7 +1891,7 @@ ALTER TABLE `guild_wars`
   ADD KEY `guild2` (`guild2`);
 
 --
--- Indexes for table `houses`
+-- Índices de tabela `houses`
 --
 ALTER TABLE `houses`
   ADD PRIMARY KEY (`id`),
@@ -1440,20 +1899,35 @@ ALTER TABLE `houses`
   ADD KEY `town_id` (`town_id`);
 
 --
--- Indexes for table `house_lists`
+-- Índices de tabela `house_lists`
 --
 ALTER TABLE `house_lists`
   ADD KEY `house_id` (`house_id`);
 
 --
--- Indexes for table `ip_bans`
+-- Índices de tabela `ip_bans`
 --
 ALTER TABLE `ip_bans`
   ADD PRIMARY KEY (`ip`),
   ADD KEY `banned_by` (`banned_by`);
 
 --
--- Indexes for table `players`
+-- Índices de tabela `market_history`
+--
+ALTER TABLE `market_history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `player_id` (`player_id`,`sale`);
+
+--
+-- Índices de tabela `market_offers`
+--
+ALTER TABLE `market_offers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sale` (`sale`,`itemtype`),
+  ADD KEY `created` (`created`);
+
+--
+-- Índices de tabela `players`
 --
 ALTER TABLE `players`
   ADD PRIMARY KEY (`id`),
@@ -1462,13 +1936,13 @@ ALTER TABLE `players`
   ADD KEY `vocation` (`vocation`);
 
 --
--- Indexes for table `players_online`
+-- Índices de tabela `players_online`
 --
 ALTER TABLE `players_online`
   ADD PRIMARY KEY (`player_id`);
 
 --
--- Indexes for table `player_deaths`
+-- Índices de tabela `player_deaths`
 --
 ALTER TABLE `player_deaths`
   ADD KEY `player_id` (`player_id`),
@@ -1476,167 +1950,453 @@ ALTER TABLE `player_deaths`
   ADD KEY `mostdamage_by` (`mostdamage_by`);
 
 --
--- Indexes for table `player_depotitems`
+-- Índices de tabela `player_depotitems`
 --
 ALTER TABLE `player_depotitems`
   ADD UNIQUE KEY `player_id_2` (`player_id`,`sid`);
 
 --
--- Indexes for table `player_items`
+-- Índices de tabela `player_items`
 --
 ALTER TABLE `player_items`
   ADD KEY `player_id` (`player_id`),
   ADD KEY `sid` (`sid`);
 
 --
--- Indexes for table `player_murders`
+-- Índices de tabela `player_murders`
 --
 ALTER TABLE `player_murders`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `player_namelocks`
+-- Índices de tabela `player_namelocks`
 --
 ALTER TABLE `player_namelocks`
   ADD PRIMARY KEY (`player_id`),
   ADD KEY `namelocked_by` (`namelocked_by`);
 
 --
--- Indexes for table `player_spells`
+-- Índices de tabela `player_spells`
 --
 ALTER TABLE `player_spells`
   ADD KEY `player_id` (`player_id`);
 
 --
--- Indexes for table `player_storage`
+-- Índices de tabela `player_storage`
 --
 ALTER TABLE `player_storage`
   ADD PRIMARY KEY (`player_id`,`key`);
 
 --
--- Indexes for table `server_config`
+-- Índices de tabela `server_config`
 --
 ALTER TABLE `server_config`
   ADD PRIMARY KEY (`config`);
 
 --
--- Indexes for table `tile_store`
+-- Índices de tabela `tile_store`
 --
 ALTER TABLE `tile_store`
   ADD KEY `house_id` (`house_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Índices de tabela `znote`
+--
+ALTER TABLE `znote`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_accounts`
+--
+ALTER TABLE `znote_accounts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_affiliate_logs`
+--
+ALTER TABLE `znote_affiliate_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_auction_player`
+--
+ALTER TABLE `znote_auction_player`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_changelog`
+--
+ALTER TABLE `znote_changelog`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_deleted_characters`
+--
+ALTER TABLE `znote_deleted_characters`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_forum`
+--
+ALTER TABLE `znote_forum`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_forum_posts`
+--
+ALTER TABLE `znote_forum_posts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_forum_threads`
+--
+ALTER TABLE `znote_forum_threads`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_global_storage`
+--
+ALTER TABLE `znote_global_storage`
+  ADD UNIQUE KEY `key` (`key`);
+
+--
+-- Índices de tabela `znote_guild_wars`
+--
+ALTER TABLE `znote_guild_wars`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_images`
+--
+ALTER TABLE `znote_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_news`
+--
+ALTER TABLE `znote_news`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_paygol`
+--
+ALTER TABLE `znote_paygol`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_paypal`
+--
+ALTER TABLE `znote_paypal`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_players`
+--
+ALTER TABLE `znote_players`
+  ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Índices de tabela `znote_player_reports`
+--
+ALTER TABLE `znote_player_reports`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_shop`
+--
+ALTER TABLE `znote_shop`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_shop_logs`
+--
+ALTER TABLE `znote_shop_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_shop_orders`
+--
+ALTER TABLE `znote_shop_orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_tickets`
+--
+ALTER TABLE `znote_tickets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_tickets_replies`
+--
+ALTER TABLE `znote_tickets_replies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_visitors`
+--
+ALTER TABLE `znote_visitors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `znote_visitors_details`
+--
+ALTER TABLE `znote_visitors_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `accounts`
+-- AUTO_INCREMENT de tabela `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `account_ban_history`
+-- AUTO_INCREMENT de tabela `account_ban_history`
 --
 ALTER TABLE `account_ban_history`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `guilds`
+-- AUTO_INCREMENT de tabela `guilds`
 --
 ALTER TABLE `guilds`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `guildwar_kills`
+-- AUTO_INCREMENT de tabela `guildwar_kills`
 --
 ALTER TABLE `guildwar_kills`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `guild_ranks`
+-- AUTO_INCREMENT de tabela `guild_ranks`
 --
 ALTER TABLE `guild_ranks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `guild_wars`
+-- AUTO_INCREMENT de tabela `guild_wars`
 --
 ALTER TABLE `guild_wars`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `houses`
+-- AUTO_INCREMENT de tabela `houses`
 --
 ALTER TABLE `houses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=862;
 
 --
--- AUTO_INCREMENT for table `players`
+-- AUTO_INCREMENT de tabela `market_history`
 --
-ALTER TABLE `players`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `market_history`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `player_murders`
+-- AUTO_INCREMENT de tabela `market_offers`
+--
+ALTER TABLE `market_offers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `players`
+--
+ALTER TABLE `players`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de tabela `player_murders`
 --
 ALTER TABLE `player_murders`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT de tabela `znote`
+--
+ALTER TABLE `znote`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `znote_accounts`
+--
+ALTER TABLE `znote_accounts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `znote_affiliate_logs`
+--
+ALTER TABLE `znote_affiliate_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_auction_player`
+--
+ALTER TABLE `znote_auction_player`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_changelog`
+--
+ALTER TABLE `znote_changelog`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_deleted_characters`
+--
+ALTER TABLE `znote_deleted_characters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_forum`
+--
+ALTER TABLE `znote_forum`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de tabela `znote_forum_posts`
+--
+ALTER TABLE `znote_forum_posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_forum_threads`
+--
+ALTER TABLE `znote_forum_threads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_guild_wars`
+--
+ALTER TABLE `znote_guild_wars`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_images`
+--
+ALTER TABLE `znote_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_news`
+--
+ALTER TABLE `znote_news`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_paygol`
+--
+ALTER TABLE `znote_paygol`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_paypal`
+--
+ALTER TABLE `znote_paypal`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_players`
+--
+ALTER TABLE `znote_players`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT de tabela `znote_player_reports`
+--
+ALTER TABLE `znote_player_reports`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_shop`
+--
+ALTER TABLE `znote_shop`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_shop_logs`
+--
+ALTER TABLE `znote_shop_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_shop_orders`
+--
+ALTER TABLE `znote_shop_orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_tickets`
+--
+ALTER TABLE `znote_tickets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_tickets_replies`
+--
+ALTER TABLE `znote_tickets_replies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_visitors`
+--
+ALTER TABLE `znote_visitors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `znote_visitors_details`
+--
+ALTER TABLE `znote_visitors_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restrições para tabelas despejadas
 --
 
 --
--- Constraints for table `account_bans`
+-- Restrições para tabelas `account_bans`
 --
 ALTER TABLE `account_bans`
   ADD CONSTRAINT `account_bans_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `account_bans_ibfk_2` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `account_ban_history`
+-- Restrições para tabelas `account_ban_history`
 --
 ALTER TABLE `account_ban_history`
   ADD CONSTRAINT `account_ban_history_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `account_ban_history_ibfk_2` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `account_viplist`
+-- Restrições para tabelas `account_viplist`
 --
 ALTER TABLE `account_viplist`
   ADD CONSTRAINT `account_viplist_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `account_viplist_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `guilds`
+-- Restrições para tabelas `guilds`
 --
 ALTER TABLE `guilds`
   ADD CONSTRAINT `guilds_ibfk_1` FOREIGN KEY (`ownerid`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `guild_wars`
---
-ALTER TABLE `guild_wars`
-  ADD CONSTRAINT `guild1_ibfk_1` FOREIGN KEY (`guild1`) REFERENCES `guilds` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `guild2_ibfk_1` FOREIGN KEY (`guild2`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
-COMMIT;
-  
---
--- Constraints for table `guildwar_kills`
+-- Restrições para tabelas `guildwar_kills`
 --
 ALTER TABLE `guildwar_kills`
   ADD CONSTRAINT `guildwar_kills_ibfk_1` FOREIGN KEY (`warid`) REFERENCES `guild_wars` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `guild_invites`
+-- Restrições para tabelas `guild_invites`
 --
 ALTER TABLE `guild_invites`
   ADD CONSTRAINT `guild_invites_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `guild_invites_ibfk_2` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `guild_membership`
+-- Restrições para tabelas `guild_membership`
 --
 ALTER TABLE `guild_membership`
   ADD CONSTRAINT `guild_membership_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1644,68 +2404,75 @@ ALTER TABLE `guild_membership`
   ADD CONSTRAINT `guild_membership_ibfk_3` FOREIGN KEY (`rank_id`) REFERENCES `guild_ranks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `guild_ranks`
+-- Restrições para tabelas `guild_ranks`
 --
 ALTER TABLE `guild_ranks`
   ADD CONSTRAINT `guild_ranks_ibfk_1` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `house_lists`
+-- Restrições para tabelas `guild_wars`
+--
+ALTER TABLE `guild_wars`
+  ADD CONSTRAINT `guild1_ibfk_1` FOREIGN KEY (`guild1`) REFERENCES `guilds` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `guild2_ibfk_1` FOREIGN KEY (`guild2`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `house_lists`
 --
 ALTER TABLE `house_lists`
   ADD CONSTRAINT `house_lists_ibfk_1` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `ip_bans`
+-- Restrições para tabelas `ip_bans`
 --
 ALTER TABLE `ip_bans`
   ADD CONSTRAINT `ip_bans_ibfk_1` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `players`
+-- Restrições para tabelas `players`
 --
 ALTER TABLE `players`
   ADD CONSTRAINT `players_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `player_deaths`
+-- Restrições para tabelas `player_deaths`
 --
 ALTER TABLE `player_deaths`
   ADD CONSTRAINT `player_deaths_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `player_depotitems`
+-- Restrições para tabelas `player_depotitems`
 --
 ALTER TABLE `player_depotitems`
   ADD CONSTRAINT `player_depotitems_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `player_items`
+-- Restrições para tabelas `player_items`
 --
 ALTER TABLE `player_items`
   ADD CONSTRAINT `player_items_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `player_namelocks`
+-- Restrições para tabelas `player_namelocks`
 --
 ALTER TABLE `player_namelocks`
   ADD CONSTRAINT `player_namelocks_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `player_namelocks_ibfk_2` FOREIGN KEY (`namelocked_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `player_spells`
+-- Restrições para tabelas `player_spells`
 --
 ALTER TABLE `player_spells`
   ADD CONSTRAINT `player_spells_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `player_storage`
+-- Restrições para tabelas `player_storage`
 --
 ALTER TABLE `player_storage`
   ADD CONSTRAINT `player_storage_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `tile_store`
+-- Restrições para tabelas `tile_store`
 --
 ALTER TABLE `tile_store`
   ADD CONSTRAINT `tile_store_ibfk_1` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE;

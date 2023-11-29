@@ -76,9 +76,9 @@ mapAuthor = "CipSoft"
 
 -- MySQL
 mysqlHost = "127.0.0.1"
-mysqlUser = "fefe"
-mysqlPass = "fefe"
-mysqlDatabase = "tibiatwofriends"
+mysqlUser = "root"
+mysqlPass = "rodrigo123"
+mysqlDatabase = "globalold"
 mysqlPort = 3306
 mysqlSock = ""
 

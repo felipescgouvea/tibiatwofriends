@@ -647,7 +647,6 @@ bool IOLoginData::savePlayer(Player* player)
 	query << "`lookhead` = " << static_cast<uint32_t>(player->defaultOutfit.lookHead) << ',';
 	query << "`looklegs` = " << static_cast<uint32_t>(player->defaultOutfit.lookLegs) << ',';
 	query << "`looktype` = " << player->defaultOutfit.lookType << ',';
-	query << "`lookaddons` = " << static_cast<uint32_t>(player->defaultOutfit.lookAddons) << ',';
 	query << "`maglevel` = " << player->magLevel << ',';
 	query << "`mana` = " << player->mana << ',';
 	query << "`manamax` = " << player->manaMax << ',';
@@ -661,7 +660,7 @@ bool IOLoginData::savePlayer(Player* player)
 	query << "`posz` = " << loginPosition.getZ() << ',';
 
 	query << "`cap` = " << (player->capacity / 100) << ',';
-	query << "`sex` = " << player->sex << ',';
+	query << "`sex` = " << static_cast<int16_t>(player->sex) << ',';
 
 	if (player->lastLoginSaved != 0) {
 		query << "`lastlogin` = " << player->lastLoginSaved << ',';
@@ -808,7 +807,6 @@ bool IOLoginData::savePlayer(Player* player)
 	}
 
 	query.str(std::string());
-
 
 	query << "DELETE FROM `player_storage` WHERE `player_id` = " << player->getGUID();
 	if (!db->executeQuery(query.str())) {
